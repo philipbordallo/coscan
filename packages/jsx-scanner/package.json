@@ -17,7 +17,9 @@
   ],
   "dependencies": {},
   "devDependencies": {},
-  "peerDependencies": {},
+  "peerDependencies": {
+    "typescript": ">=5"
+  },
   "scripts": {
     "build": "rollup -c ./rollup.config.js",
     "types": "tsc --declaration --emitDeclarationOnly"
