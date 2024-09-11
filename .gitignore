@@ -1,2 +1,8 @@
+# macOS metafile
 .DS_Store
+
+# build output
+dist/
+
+# node.js packages
 node_modules/
