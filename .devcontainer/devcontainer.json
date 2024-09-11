@@ -11,7 +11,13 @@
       "settings": {
         "editor.defaultFormatter": "dprint.dprint",
         "editor.formatOnSave": true,
-        "dprint.path": "node_modules/dprint/dprint"
+        "dprint.path": "node_modules/dprint/dprint",
+        "typescript.enablePromptUseWorkspaceTsdk": true,
+        "typescript.preferences.autoImportFileExcludePatterns": [
+          "**/src/main.ts"
+        ],
+        "typescript.preferences.importModuleSpecifierEnding": "js",
+        "typescript.tsdk": "node_modules/typescript/lib"
       },
       "extensions": [
         "bierner.github-markdown-preview",
