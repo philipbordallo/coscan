@@ -1,5 +1,5 @@
 {
-  "name": "@coscan/jsx-scanner",
+  "name": "coscan",
   "version": "0.0.0",
   "author": "Philip Bordallo",
   "license": "MIT",
