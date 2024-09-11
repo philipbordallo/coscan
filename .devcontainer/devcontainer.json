@@ -6,5 +6,21 @@
     "source=${localWorkspaceFolderBasename}-node_modules,target=${containerWorkspaceFolder}/node_modules,type=volume"
   ],
   "postCreateCommand": "sudo chown node node_modules",
-  "customizations": {}
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.defaultFormatter": "dprint.dprint",
+        "editor.formatOnSave": true,
+        "dprint.path": "node_modules/dprint/dprint"
+      },
+      "extensions": [
+        "bierner.github-markdown-preview",
+        "dbaeumer.vscode-eslint",
+        "dprint.dprint",
+        "EditorConfig.EditorConfig",
+        "Google.wireit",
+        "streetsidesoftware.code-spell-checker"
+      ]
+    }
+  }
 }
