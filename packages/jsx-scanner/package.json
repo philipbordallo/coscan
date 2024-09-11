@@ -4,6 +4,14 @@
   "author": "Philip Bordallo",
   "license": "MIT",
   "type": "module",
+  "main": "./src/main.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/main.js",
+      "require": "./dist/cjs/main.js",
+      "types": "./dist/esm/main.d.ts"
+    }
+  },
   "browserslist": [
     "node 22"
   ],
@@ -12,8 +20,14 @@
     "@babel/core": "^7.25.2",
     "@babel/preset-env": "^7.25.4",
     "@babel/plugin-transform-runtime": "^7.25.4",
-    "@babel/preset-typescript": "^7.24.7"
+    "@babel/preset-typescript": "^7.24.7",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "rollup": "^4.21.2"
   },
   "peerDependencies": {},
-  "scripts": {}
+  "scripts": {
+    "build": "rollup -c ./rollup.config.js",
+    "types": "tsc --declaration --emitDeclarationOnly"
+  }
 }
