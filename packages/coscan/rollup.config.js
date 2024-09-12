@@ -24,6 +24,7 @@ export default defineConfig({
     },
   ],
   external: [
+    /@coscan/,
     /node_modules/,
   ],
   plugins: [
