@@ -1,0 +1,21 @@
+{
+  "name": "@coscan/react-simple-example",
+  "version": "0.0.0",
+  "private": true,
+  "description": "",
+  "author": "Philip Bordallo",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "react": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@coscan/jsx-scanner": "*"
+  },
+  "peerDependencies": {},
+  "scripts": {
+    "start": "node ./output.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
