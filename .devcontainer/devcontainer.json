@@ -17,6 +17,7 @@
           "**/src/main.ts"
         ],
         "typescript.preferences.importModuleSpecifierEnding": "js",
+        "typescript.preferences.preferTypeOnlyAutoImports": true,
         "typescript.tsdk": "node_modules/typescript/lib"
       },
       "extensions": [

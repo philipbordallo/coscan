@@ -3,6 +3,8 @@
 
 # build output
 dist/
+output.json
 
 # node.js packages
 node_modules/
+
