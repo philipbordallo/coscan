@@ -14,13 +14,13 @@ import {
   TypeChecker,
 } from 'typescript';
 import { type ImportCollection } from '../entities/import.ts';
-import { type Instances } from '../entities/instance.ts';
+import type { Discovery } from '../entities/scanner.ts';
 import { elementParser } from './element-parser.ts';
 import { functionParser } from './function-parser.ts';
 import { importParser } from './import-parser.ts';
 
 type ParserArgs = {
-  instances: Instances;
+  discoveries: Discovery[];
   importCollection: ImportCollection;
   sourceFile: SourceFile;
   moduleResolutionCache: ModuleResolutionCache;
@@ -29,33 +29,40 @@ type ParserArgs = {
 };
 
 export function parser({
-  instances,
   sourceFile,
   importCollection,
   moduleResolutionCache,
   compilerOptions,
   typeChecker,
+  discoveries,
 }: ParserArgs) {
   return (node: Node) => {
     if (isFunctionDeclaration(node)) {
-      functionParser({ node, sourceFile, typeChecker, givenName: node.name });
+      functionParser({ discoveries, importCollection, node, sourceFile, typeChecker, givenName: node.name });
     }
 
     if (isVariableDeclaration(node) && node.initializer) {
       if (isFunctionExpression(node.initializer) || isArrowFunction(node.initializer)) {
-        functionParser({ node: node.initializer, sourceFile, typeChecker, givenName: node.name });
+        functionParser({
+          discoveries,
+          importCollection,
+          node: node.initializer,
+          sourceFile,
+          typeChecker,
+          givenName: node.name,
+        });
       }
     }
 
     if (isJsxElement(node) || isJsxSelfClosingElement(node)) {
-      elementParser({ node, instances, importCollection, sourceFile });
+      elementParser({ discoveries, importCollection, node, sourceFile });
     }
 
     if (isImportClause(node)) {
       importParser({
+        importCollection,
         node,
         sourceFile,
-        importCollection,
         moduleResolutionCache,
         compilerOptions,
         system,
@@ -63,7 +70,7 @@ export function parser({
     }
 
     const parse = parser({
-      instances,
+      discoveries,
       sourceFile,
       importCollection,
       moduleResolutionCache,

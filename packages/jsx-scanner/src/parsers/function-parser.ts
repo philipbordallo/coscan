@@ -7,7 +7,11 @@ import {
   type SourceFile,
   type TypeChecker,
 } from 'typescript';
+import { getComponentId } from '../entities/component.ts';
+import { getRelativeFilePath } from '../entities/file.ts';
+import type { ImportCollection } from '../entities/import.ts';
 import { getPosition } from '../entities/position.ts';
+import type { Discovery } from '../entities/scanner.ts';
 import { isElementReturn } from '../guards/element-return.ts';
 
 type FunctionNode = FunctionDeclaration | FunctionExpression | ArrowFunction;
@@ -39,6 +43,8 @@ type FunctionParserArgs = {
   sourceFile: SourceFile;
   typeChecker: TypeChecker;
   givenName?: Identifier | BindingName;
+  importCollection: ImportCollection;
+  discoveries: Discovery[];
 };
 
 export function functionParser({
@@ -46,6 +52,8 @@ export function functionParser({
   sourceFile,
   typeChecker,
   givenName,
+  importCollection,
+  discoveries,
 }: FunctionParserArgs) {
   const returnType = getReturnType(node, sourceFile, typeChecker);
 
@@ -54,15 +62,19 @@ export function functionParser({
   const startPosition = getPosition(node.getStart(sourceFile), sourceFile);
   const endPosition = getPosition(node.getEnd(), sourceFile);
 
-  const name = givenName?.getText(sourceFile);
+  const componentName = givenName?.getText(sourceFile) ?? '';
+  const relativeFilePath = getRelativeFilePath(sourceFile);
 
-  // get the props of the component
-  console.log({
-    name,
+  const componentId = getComponentId(componentName, importCollection, relativeFilePath);
+
+  discoveries.push({
+    type: 'definition',
+    componentName,
+    componentId,
     returnType,
     startPosition,
     endPosition,
-    filePath: sourceFile.fileName,
-    positionPath: `${sourceFile.fileName}:${startPosition.line}:${startPosition.character}`,
+    filePath: relativeFilePath,
+    positionPath: `${relativeFilePath}:${startPosition.line}:${startPosition.character}`,
   });
 }

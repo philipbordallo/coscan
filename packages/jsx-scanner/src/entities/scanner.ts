@@ -6,22 +6,23 @@ import {
   JsxEmit,
 } from 'typescript';
 import { parser } from '../parsers/parser.ts';
-import { Component, type ComponentId, type ComponentName } from './component.ts';
+import type { Definition } from './definintion.ts';
 import { type ImportCollection } from './import.ts';
-import { type Instances } from './instance.ts';
+import { type Instance } from './instance.ts';
 
-type GroupRecord = Record<ComponentId, Instances>;
-type ComponentCollection = Map<ComponentId, ComponentName>;
+export type Discovery = Definition | Instance;
 
 type jsxScannerConfig = {
   files: string[];
 };
 
-export async function jsxScanner(config: jsxScannerConfig): Promise<Component[]> {
+export async function jsxScanner(config: jsxScannerConfig): Promise<Discovery[]> {
   const compilerOptions: CompilerOptions = {
     jsx: JsxEmit.React,
     checkJs: true,
   };
+
+  const discoveries: Discovery[] = [];
 
   const host = createCompilerHost(compilerOptions);
 
@@ -31,7 +32,6 @@ export async function jsxScanner(config: jsxScannerConfig): Promise<Component[]>
     host,
   );
 
-  const instances: Instances = [];
   const sourceFiles = program.getSourceFiles();
   const moduleResolutionCache = createModuleResolutionCache(
     process.cwd(),
@@ -48,7 +48,7 @@ export async function jsxScanner(config: jsxScannerConfig): Promise<Component[]>
 
     // Parse the source file
     const parse = parser({
-      instances,
+      discoveries,
       sourceFile,
       importCollection,
       moduleResolutionCache,
@@ -60,31 +60,5 @@ export async function jsxScanner(config: jsxScannerConfig): Promise<Component[]>
     sourceFile.forEachChild(parse);
   });
 
-  const componentCollection: ComponentCollection = new Map();
-
-  // Group instances by component id
-  const groupRecord = instances.reduce<GroupRecord>((acc, instance) => {
-    const groupInstances: Instances = acc[instance.componentId] || [];
-
-    componentCollection.set(instance.componentId, instance.componentName);
-
-    return {
-      ...acc,
-      [instance.componentId]: [...groupInstances, {
-        ...instance,
-      }],
-    };
-  }, {});
-
-  const entries = Object.entries(groupRecord) as [ComponentId, Instances][];
-
-  const output = entries.map(([id, instances]) => {
-    const component = componentCollection.get(id);
-
-    if (!component) throw new Error(`Component not found for id: ${id}`);
-
-    return { name: component, id, count: instances.length, instances };
-  });
-
-  return output;
+  return discoveries;
 }

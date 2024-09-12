@@ -6,8 +6,8 @@ import {
   type SourceFile,
   type System,
 } from 'typescript';
+import { FilePath } from '../entities/file.ts';
 import { type ImportCollection, ImportPath } from '../entities/import.ts';
-import { FilePath } from '../entities/instance.ts';
 
 type ImportParserArgs = {
   node: ImportClause;
