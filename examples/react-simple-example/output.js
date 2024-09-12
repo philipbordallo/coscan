@@ -1,8 +1,8 @@
-import { jsxScanner } from '@coscan/jsx-scanner';
+import { coscan } from 'coscan';
 import { writeFile } from 'node:fs/promises';
 
 async function main() {
-  const results = await jsxScanner({
+  const results = await coscan({
     files: [
       'src/components/hello-component.tsx',
       'src/components/simple-component.tsx',
