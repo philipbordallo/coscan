@@ -12,6 +12,9 @@
       "types": "./dist/esm/main.d.ts"
     }
   },
+  "files": [
+    "dist"
+  ],
   "browserslist": [
     "node 22"
   ],
