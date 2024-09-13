@@ -6,9 +6,9 @@
   "license": "MIT",
   "type": "module",
   "workspaces": [
+    "devtools/*",
     "examples/*",
-    "packages/*",
-    "utilities/*"
+    "packages/*"
   ],
   "exports": {
     "./tsconfig": {

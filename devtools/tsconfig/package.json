@@ -1,0 +1,16 @@
+{
+  "name": "@coscan/tsconfig",
+  "version": "0.0.0",
+  "private": true,
+  "author": "Philip Bordallo",
+  "license": "MIT",
+  "type": "module",
+  "exports": "./tsconfig.json",
+  "files": [
+    "./tsconfig.json"
+  ],
+  "dependencies": {},
+  "devDependencies": {},
+  "peerDependencies": {},
+  "scripts": {}
+}

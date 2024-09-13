@@ -1,0 +1,16 @@
+{
+  "name": "@coscan/babel-config",
+  "version": "0.0.0",
+  "private": true,
+  "author": "Philip Bordallo",
+  "license": "MIT",
+  "type": "module",
+  "exports": "./babel.config.json",
+  "files": [
+    "./babel.config.json"
+  ],
+  "dependencies": {},
+  "devDependencies": {},
+  "peerDependencies": {},
+  "scripts": {}
+}

@@ -16,13 +16,13 @@
     "dist"
   ],
   "browserslist": [
-    "node 22"
+    "extends @coscan/browserslist-config"
   ],
   "dependencies": {
     "@coscan/jsx-scanner": "*"
   },
   "devDependencies": {
-    "@coscan/devtools": "*"
+    "@coscan/rollup": "*"
   },
   "peerDependencies": {},
   "scripts": {

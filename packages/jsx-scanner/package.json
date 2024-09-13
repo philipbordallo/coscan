@@ -16,11 +16,11 @@
     "dist"
   ],
   "browserslist": [
-    "node 22"
+    "extends @coscan/browserslist-config"
   ],
   "dependencies": {},
   "devDependencies": {
-    "@coscan/devtools": "*"
+    "@coscan/rollup": "*"
   },
   "peerDependencies": {
     "typescript": ">=5"

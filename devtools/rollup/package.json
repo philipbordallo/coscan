@@ -1,5 +1,5 @@
 {
-  "name": "@coscan/devtools",
+  "name": "@coscan/rollup",
   "version": "0.0.0",
   "private": true,
   "author": "Philip Bordallo",
@@ -11,23 +11,13 @@
       "import": "./dist/main.js",
       "require": "./dist/main.cjs",
       "types": "./dist/main.d.ts"
-    },
-    "./tsconfig.json": {
-      "import": "./tsconfig.json",
-      "require": "./tsconfig.json"
-    },
-    "./babel.config.json": {
-      "import": "./babel.config.json",
-      "require": "./babel.config.json"
     }
   },
   "files": [
-    "dist",
-    "babel.config.json",
-    "tsconfig.json"
+    "dist"
   ],
   "browserslist": [
-    "node 22"
+    "extends @coscan/browserslist-config"
   ],
   "dependencies": {},
   "devDependencies": {},
