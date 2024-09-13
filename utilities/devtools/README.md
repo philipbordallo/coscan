@@ -6,6 +6,8 @@
 
 ### Babel
 
+`babel.config.json`
+
 ```json
 {
   "extends": "@coscan/devtools/babel.config.json"
@@ -13,6 +15,8 @@
 ```
 
 ### Rollup
+
+`rollup.config.js`
 
 ```ts
 import { createRollupConfig } from '@coscan/devtools';
@@ -22,6 +26,8 @@ export default createRollupConfig(pkg);
 ```
 
 ### TypeScript
+
+`tsconfig.json`
 
 ```json
 {
