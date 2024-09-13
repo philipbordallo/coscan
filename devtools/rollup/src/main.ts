@@ -1,1 +1,1 @@
-export { createRollupConfig } from './rollup.js';
+export { createRollupConfig } from './rollup.ts';

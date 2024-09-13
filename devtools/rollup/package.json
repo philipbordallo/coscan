@@ -20,7 +20,11 @@
     "extends @coscan/browserslist-config"
   ],
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "rollup": "^4.21.2"
+  },
   "peerDependencies": {},
   "scripts": {
     "build": "rollup -c ./rollup.config.js",
