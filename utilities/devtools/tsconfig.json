@@ -12,7 +12,7 @@
     "jsx": "preserve",
     "module": "esnext",
     "moduleResolution": "bundler",
-    "outDir": "${configDir}/dist/esm/",
+    "outDir": "${configDir}/dist/",
     "rootDir": "${configDir}/src/",
     "skipLibCheck": true,
     "strict": true,

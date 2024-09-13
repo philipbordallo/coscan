@@ -1,3 +1,3 @@
 {
-  "extends": "../../babel.config.json"
+  "extends": "@coscan/devtools/babel.config.json"
 }

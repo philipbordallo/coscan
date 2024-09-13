@@ -1,6 +1,7 @@
 {
-  "name": "@coscan/jsx-scanner",
-  "version": "0.1.0",
+  "name": "@coscan/devtools",
+  "version": "0.0.0",
+  "private": true,
   "author": "Philip Bordallo",
   "license": "MIT",
   "type": "module",
@@ -10,21 +11,27 @@
       "import": "./dist/main.js",
       "require": "./dist/main.cjs",
       "types": "./dist/main.d.ts"
+    },
+    "./tsconfig.json": {
+      "import": "./tsconfig.json",
+      "require": "./tsconfig.json"
+    },
+    "./babel.config.json": {
+      "import": "./babel.config.json",
+      "require": "./babel.config.json"
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "babel.config.json",
+    "tsconfig.json"
   ],
   "browserslist": [
     "node 22"
   ],
   "dependencies": {},
-  "devDependencies": {
-    "@coscan/devtools": "*"
-  },
-  "peerDependencies": {
-    "typescript": ">=5"
-  },
+  "devDependencies": {},
+  "peerDependencies": {},
   "scripts": {
     "build": "rollup -c ./rollup.config.js",
     "types": "tsc"

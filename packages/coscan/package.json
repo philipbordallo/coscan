@@ -7,9 +7,9 @@
   "main": "./src/main.ts",
   "exports": {
     ".": {
-      "import": "./dist/esm/main.js",
-      "require": "./dist/cjs/main.js",
-      "types": "./dist/esm/main.d.ts"
+      "import": "./dist/main.js",
+      "require": "./dist/main.cjs",
+      "types": "./dist/main.d.ts"
     }
   },
   "files": [
@@ -21,10 +21,12 @@
   "dependencies": {
     "@coscan/jsx-scanner": "*"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@coscan/devtools": "*"
+  },
   "peerDependencies": {},
   "scripts": {
     "build": "rollup -c ./rollup.config.js",
-    "types": "tsc --declaration --emitDeclarationOnly"
+    "types": "tsc"
   }
 }
