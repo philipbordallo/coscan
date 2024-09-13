@@ -1,36 +1,14 @@
-# `@coscan/devtools`
+# `@coscan/rollup`
 
-> A collection of utilities for development.
+> [Rollup](https://rollupjs.org) tools for development.
 
 ## Usage
-
-### Babel
-
-`babel.config.json`
-
-```json
-{
-  "extends": "@coscan/devtools/babel.config.json"
-}
-```
-
-### Rollup
 
 `rollup.config.js`
 
 ```ts
-import { createRollupConfig } from '@coscan/devtools';
+import { createRollupConfig } from '@coscan/rollup';
 import pkg from './package.json' with { type: 'json' };
 
 export default createRollupConfig(pkg);
-```
-
-### TypeScript
-
-`tsconfig.json`
-
-```json
-{
-  "extends": "@coscan/devtools/tsconfig.json"
-}
 ```
