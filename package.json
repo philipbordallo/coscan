@@ -10,11 +10,6 @@
     "examples/*",
     "packages/*"
   ],
-  "exports": {
-    "./tsconfig": {
-      "import": "./tsconfig.json"
-    }
-  },
   "dependencies": {},
   "devDependencies": {
     "@dprint/json": "^0.19.3",
