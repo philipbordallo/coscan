@@ -6,7 +6,7 @@ import {
   JsxEmit,
 } from 'typescript';
 import { parser } from '../parsers/parser.ts';
-import type { Definition } from './definintion.ts';
+import type { Definition } from './definition.ts';
 import { type ImportCollection } from './import.ts';
 import { type Instance } from './instance.ts';
 
