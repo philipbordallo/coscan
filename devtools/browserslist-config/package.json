@@ -1,0 +1,16 @@
+{
+  "name": "@coscan/browserslist-config",
+  "version": "0.0.0",
+  "private": true,
+  "author": "Philip Bordallo",
+  "license": "MIT",
+  "type": "module",
+  "exports": "./browserslist-config.cjs",
+  "files": [
+    "./browserslist-config.cjs"
+  ],
+  "dependencies": {},
+  "devDependencies": {},
+  "peerDependencies": {},
+  "scripts": {}
+}

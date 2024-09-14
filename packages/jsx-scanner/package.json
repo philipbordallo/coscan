@@ -7,24 +7,26 @@
   "main": "./src/main.ts",
   "exports": {
     ".": {
-      "import": "./dist/esm/main.js",
-      "require": "./dist/cjs/main.js",
-      "types": "./dist/esm/main.d.ts"
+      "import": "./dist/main.js",
+      "require": "./dist/main.cjs",
+      "types": "./dist/main.d.ts"
     }
   },
   "files": [
     "dist"
   ],
   "browserslist": [
-    "node 22"
+    "extends @coscan/browserslist-config"
   ],
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "@coscan/rollup": "*"
+  },
   "peerDependencies": {
     "typescript": ">=5"
   },
   "scripts": {
     "build": "rollup -c ./rollup.config.js",
-    "types": "tsc --declaration --emitDeclarationOnly"
+    "types": "tsc"
   }
 }

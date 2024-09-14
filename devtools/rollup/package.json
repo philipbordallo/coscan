@@ -1,6 +1,7 @@
 {
-  "name": "coscan",
-  "version": "0.1.0",
+  "name": "@coscan/rollup",
+  "version": "0.0.0",
+  "private": true,
   "author": "Philip Bordallo",
   "license": "MIT",
   "type": "module",
@@ -18,11 +19,11 @@
   "browserslist": [
     "extends @coscan/browserslist-config"
   ],
-  "dependencies": {
-    "@coscan/jsx-scanner": "*"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "@coscan/rollup": "*"
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "rollup": "^4.21.2"
   },
   "peerDependencies": {},
   "scripts": {
