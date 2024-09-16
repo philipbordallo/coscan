@@ -26,7 +26,61 @@
     "typescript": ">=5"
   },
   "scripts": {
-    "build": "rollup -c ./rollup.config.js",
-    "types": "tsc"
+    "build": "wireit",
+    "start": "wireit",
+    "rollup:build": "wireit",
+    "rollup:watch": "wireit",
+    "type:build": "wireit",
+    "type:watch": "wireit"
+  },
+  "wireit": {
+    "build": {
+      "command": "echo >> /dev/null",
+      "dependencies": [
+        "rollup:build",
+        "type:build"
+      ]
+    },
+    "start": {
+      "command": "cat",
+      "service": true,
+      "dependencies": [
+        "rollup:watch",
+        "type:watch"
+      ]
+    },
+    "rollup:build": {
+      "command": "rollup -c ./rollup.config.js",
+      "files": [
+        "./src/**/*.ts",
+        "./rollup.config.js"
+      ],
+      "output": [
+        "./dist/**/main.js",
+        "./dist/**/main.cjs"
+      ]
+    },
+    "rollup:watch": {
+      "command": "rollup -c ./rollup.config.js --watch",
+      "service": true,
+      "clean": false
+    },
+    "type:build": {
+      "command": "tsc --build --pretty",
+      "files": [
+        "./src/**/*.ts",
+        "./tsconfig.json"
+      ],
+      "output": [
+        "./dist/**/*.d.ts",
+        "./dist/**/*.d.ts.map",
+        "./dist/tsconfig.tsbuildinfo"
+      ]
+    },
+    "type:watch": {
+      "command": "tsc --build --emitDeclarationOnly --preserveWatchOutput --watch",
+      "service": true,
+      "clean": false
+    }
   }
 }
