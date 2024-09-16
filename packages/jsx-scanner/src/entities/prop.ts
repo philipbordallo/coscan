@@ -8,18 +8,40 @@ import {
   type JsxAttributeName,
   type JsxAttributes,
   type JsxAttributeValue,
+  type ObjectLiteralExpression,
   type SourceFile,
 } from 'typescript';
 import { isBooleanLiteral } from '../guards/boolean-literal.ts';
 
 export type Prop = string;
-export type PropValue = string | boolean | Record<string, string> | undefined;
+export type PropValue = string | boolean | ObjectPropValue | undefined;
 export type Props = {
   [prop: Prop]: PropValue;
 };
 
 function formatExpression(value: string): string {
   return `Expression -> ${value}`;
+}
+
+type ObjectPropValue = Record<string, string>;
+
+function parseObjectExpression(expression: ObjectLiteralExpression, sourceFile?: SourceFile): ObjectPropValue {
+  const entries = expression.properties
+    .map((property) => {
+      if (isPropertyAssignment(property)) {
+        const key = property.name.getText(sourceFile);
+        const initializer = property.initializer.getText(sourceFile);
+
+        const value = isStringLiteral(property.initializer)
+          ? initializer.replace(/['"]+/g, '')
+          : formatExpression(initializer);
+
+        return [key, value];
+      }
+    })
+    .filter((entry) => entry !== undefined);
+
+  return Object.fromEntries(entries);
 }
 
 function getPropValue(value?: JsxAttributeValue, sourceFile?: SourceFile): PropValue {
@@ -32,7 +54,7 @@ function getPropValue(value?: JsxAttributeValue, sourceFile?: SourceFile): PropV
     return value.text;
   }
 
-  // If the value is an expression, check if it's a boolean or an identifier
+  // If the value is an expression, parse it
   if (isJsxExpression(value) && value.expression) {
     const expression = value.expression.getText(sourceFile);
 
@@ -45,22 +67,7 @@ function getPropValue(value?: JsxAttributeValue, sourceFile?: SourceFile): PropV
     }
 
     if (isObjectLiteralExpression(value.expression)) {
-      const entries = value.expression.properties
-        .map((prop) => {
-          if (isPropertyAssignment(prop)) {
-            const key = prop.name.getText(sourceFile);
-            const initializer = prop.initializer.getText(sourceFile);
-
-            const value = isStringLiteral(prop.initializer)
-              ? initializer.replace(/['"]+/g, '')
-              : formatExpression(initializer);
-
-            return [key, value];
-          }
-        })
-        .filter((entry) => entry !== undefined);
-
-      return Object.fromEntries(entries);
+      return parseObjectExpression(value.expression, sourceFile);
     }
 
     return expression;
