@@ -1,9 +1,13 @@
 import {
+  type Expression,
+  isArrayLiteralExpression,
   isIdentifier,
   isJsxAttribute,
   isJsxExpression,
+  isNumericLiteral,
   isObjectLiteralExpression,
   isPropertyAssignment,
+  isShorthandPropertyAssignment,
   isStringLiteral,
   type JsxAttributeName,
   type JsxAttributes,
@@ -12,29 +16,70 @@ import {
   type SourceFile,
 } from 'typescript';
 import { isBooleanLiteral } from '../guards/boolean-literal.ts';
+import { isNullLiteral } from '../guards/null-literal.ts';
 
 export type Prop = string;
-export type PropValue = string | boolean | ObjectPropValue | undefined;
+export type PropValue = string | boolean | ObjectPropValue | ExpressionPropValue | null | undefined;
 export type Props = {
   [prop: Prop]: PropValue;
 };
 
-function formatExpression(value: string): string {
+type ExpressionPropValue = `Expression -> ${string}`;
+
+function formatExpression(value: string): ExpressionPropValue {
   return `Expression -> ${value}`;
 }
 
-type ObjectPropValue = Record<string, string>;
+type PropertyAssignmentValue =
+  | string
+  | number
+  | boolean
+  | PropertyAssignmentValue[]
+  | ObjectPropValue
+  | null
+  | undefined;
+
+function getPropertyAssignmentValue(initializer: Expression, sourceFile?: SourceFile): PropertyAssignmentValue {
+  if (isStringLiteral(initializer)) {
+    return initializer.getText(sourceFile).replace(/['"]+/g, '');
+  }
+
+  if (isNumericLiteral(initializer) || isBooleanLiteral(initializer)) {
+    return JSON.parse(initializer.getText(sourceFile));
+  }
+
+  if (isArrayLiteralExpression(initializer)) {
+    return initializer.elements.map((element) => getPropertyAssignmentValue(element, sourceFile));
+  }
+
+  if (isObjectLiteralExpression(initializer)) {
+    return parseObjectExpression(initializer, sourceFile);
+  }
+
+  if (isIdentifier(initializer)) {
+    return formatExpression(initializer.getText(sourceFile));
+  }
+
+  if (isNullLiteral(initializer)) {
+    return null;
+  }
+}
+
+type ObjectPropValue = Record<string, unknown>;
 
 function parseObjectExpression(expression: ObjectLiteralExpression, sourceFile?: SourceFile): ObjectPropValue {
   const entries = expression.properties
     .map((property) => {
       if (isPropertyAssignment(property)) {
         const key = property.name.getText(sourceFile);
-        const initializer = property.initializer.getText(sourceFile);
+        const value = getPropertyAssignmentValue(property.initializer, sourceFile);
 
-        const value = isStringLiteral(property.initializer)
-          ? initializer.replace(/['"]+/g, '')
-          : formatExpression(initializer);
+        return [key, value];
+      }
+
+      if (isShorthandPropertyAssignment(property)) {
+        const key = property.name.getText(sourceFile);
+        const value = formatExpression(key);
 
         return [key, value];
       }
@@ -44,7 +89,11 @@ function parseObjectExpression(expression: ObjectLiteralExpression, sourceFile?:
   return Object.fromEntries(entries);
 }
 
-function getPropValue(value?: JsxAttributeValue, sourceFile?: SourceFile): PropValue {
+function getPropValue(
+  value?: JsxAttributeValue,
+  isParsableObjectPropValue?: boolean,
+  sourceFile?: SourceFile,
+): PropValue {
   // If a value is not defined, it means the prop is a boolean
   if (value === undefined) {
     return true;
@@ -54,7 +103,6 @@ function getPropValue(value?: JsxAttributeValue, sourceFile?: SourceFile): PropV
     return value.text;
   }
 
-  // If the value is an expression, parse it
   if (isJsxExpression(value) && value.expression) {
     const expression = value.expression.getText(sourceFile);
 
@@ -66,7 +114,11 @@ function getPropValue(value?: JsxAttributeValue, sourceFile?: SourceFile): PropV
       return formatExpression(expression);
     }
 
-    if (isObjectLiteralExpression(value.expression)) {
+    if (isNullLiteral(value.expression)) {
+      return null;
+    }
+
+    if (isObjectLiteralExpression(value.expression) && isParsableObjectPropValue) {
       return parseObjectExpression(value.expression, sourceFile);
     }
 
@@ -84,8 +136,9 @@ export function getProps({ properties }: JsxAttributes, sourceFile?: SourceFile)
   properties.forEach((prop) => {
     if (isJsxAttribute(prop)) {
       const key = getPropKey(prop.name, sourceFile);
+      const isParsableObjectPropValue = key === 'style';
 
-      props[key] = getPropValue(prop.initializer, sourceFile);
+      props[key] = getPropValue(prop.initializer, isParsableObjectPropValue, sourceFile);
     }
   });
 
