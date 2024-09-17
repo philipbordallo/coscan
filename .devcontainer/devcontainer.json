@@ -17,7 +17,8 @@
         "dprint.path": "node_modules/dprint/dprint",
         "typescript.enablePromptUseWorkspaceTsdk": true,
         "typescript.preferences.autoImportFileExcludePatterns": [
-          "**/src/main.ts"
+          "**/src/main.ts",
+          "node/test.d.ts"
         ],
         "typescript.preferences.importModuleSpecifierEnding": "js",
         "typescript.preferences.preferTypeOnlyAutoImports": true,
