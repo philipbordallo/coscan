@@ -8,6 +8,7 @@ import {
   type TypeChecker,
 } from 'typescript';
 import { getComponentId } from '../entities/component.ts';
+import type { Definition } from '../entities/definition.ts';
 import { getRelativeFilePath } from '../entities/file.ts';
 import type { ImportCollection } from '../entities/import.ts';
 import { getPosition } from '../entities/position.ts';
@@ -67,14 +68,15 @@ export function functionParser({
 
   const componentId = getComponentId(componentName, importCollection, relativeFilePath);
 
-  discoveries.push({
+  const definition: Definition = {
     type: 'definition',
     componentName,
     componentId,
-    returnType,
-    startPosition,
-    endPosition,
     filePath: relativeFilePath,
     positionPath: `${relativeFilePath}:${startPosition.line}:${startPosition.character}`,
-  });
+    startPosition,
+    endPosition,
+  };
+
+  discoveries.push(definition);
 }

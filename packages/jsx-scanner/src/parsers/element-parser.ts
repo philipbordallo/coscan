@@ -2,6 +2,7 @@ import { isJsxSelfClosingElement, type JsxElement, type JsxSelfClosingElement, t
 import { type ComponentName, getComponentId } from '../entities/component.ts';
 import { getRelativeFilePath } from '../entities/file.ts';
 import type { ImportCollection } from '../entities/import.ts';
+import type { Instance } from '../entities/instance.ts';
 import { getPosition } from '../entities/position.ts';
 import { getProps } from '../entities/prop.ts';
 import type { Discovery } from '../entities/scanner.ts';
@@ -25,7 +26,7 @@ export function elementParser({ discoveries, node, importCollection, sourceFile 
   const props = getProps(element.attributes, sourceFile);
   const componentId = getComponentId(name, importCollection, relativeFilePath);
 
-  discoveries.push({
+  const instance: Instance = {
     type: 'instance',
     componentName: name,
     componentId,
@@ -36,5 +37,7 @@ export function elementParser({ discoveries, node, importCollection, sourceFile 
     props,
     startPosition,
     endPosition,
-  });
+  };
+
+  discoveries.push(instance);
 }

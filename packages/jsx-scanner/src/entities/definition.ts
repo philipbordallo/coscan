@@ -4,7 +4,6 @@ import type { Position } from './position.ts';
 
 export type Definition = {
   type: 'definition';
-  returnType: string;
   filePath: FilePath;
   positionPath: string;
   componentName: ComponentName;
