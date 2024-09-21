@@ -11,16 +11,16 @@ import {
   type Node,
   type SourceFile,
   sys as system,
-  TypeChecker,
+  type TypeChecker,
 } from 'typescript';
 import { type ImportCollection } from '../entities/import.ts';
-import type { Discovery } from '../entities/scanner.ts';
+import { type JsxScannerDiscovery } from '../entities/scanner.ts';
 import { elementParser } from './element-parser.ts';
 import { functionParser } from './function-parser.ts';
 import { importParser } from './import-parser.ts';
 
 type ParserArgs = {
-  discoveries: Discovery[];
+  discoveries: JsxScannerDiscovery[];
   importCollection: ImportCollection;
   sourceFile: SourceFile;
   moduleResolutionCache: ModuleResolutionCache;

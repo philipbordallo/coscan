@@ -8,11 +8,11 @@ import {
   type TypeChecker,
 } from 'typescript';
 import { getComponentId } from '../entities/component.ts';
-import type { Definition } from '../entities/definition.ts';
+import type { ComponentDefinition } from '../entities/component.ts';
 import { getRelativeFilePath } from '../entities/file.ts';
 import type { ImportCollection } from '../entities/import.ts';
 import { getPosition } from '../entities/position.ts';
-import type { Discovery } from '../entities/scanner.ts';
+import type { JsxScannerDiscovery } from '../entities/scanner.ts';
 import { isElementReturn } from '../guards/element-return.ts';
 
 type FunctionNode = FunctionDeclaration | FunctionExpression | ArrowFunction;
@@ -45,7 +45,7 @@ type FunctionParserArgs = {
   typeChecker: TypeChecker;
   givenName?: Identifier | BindingName;
   importCollection: ImportCollection;
-  discoveries: Discovery[];
+  discoveries: JsxScannerDiscovery[];
 };
 
 export function functionParser({
@@ -68,7 +68,7 @@ export function functionParser({
 
   const componentId = getComponentId(componentName, importCollection, relativeFilePath);
 
-  const definition: Definition = {
+  const definition: ComponentDefinition = {
     type: 'definition',
     componentName,
     componentId,

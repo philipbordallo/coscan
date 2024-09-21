@@ -1,17 +1,17 @@
 import { isJsxSelfClosingElement, type JsxElement, type JsxSelfClosingElement, type SourceFile } from 'typescript';
 import { type ComponentName, getComponentId } from '../entities/component.ts';
+import type { ComponentInstance } from '../entities/component.ts';
 import { getRelativeFilePath } from '../entities/file.ts';
 import type { ImportCollection } from '../entities/import.ts';
-import type { Instance } from '../entities/instance.ts';
 import { getPosition } from '../entities/position.ts';
 import { getProps } from '../entities/prop.ts';
-import type { Discovery } from '../entities/scanner.ts';
+import type { JsxScannerDiscovery } from '../entities/scanner.ts';
 
 type ElementParserArgs = {
   node: JsxElement | JsxSelfClosingElement;
   importCollection: ImportCollection;
   sourceFile: SourceFile;
-  discoveries: Discovery[];
+  discoveries: JsxScannerDiscovery[];
 };
 
 export function elementParser({ discoveries, node, importCollection, sourceFile }: ElementParserArgs) {
@@ -26,7 +26,7 @@ export function elementParser({ discoveries, node, importCollection, sourceFile 
   const props = getProps(element.attributes, sourceFile);
   const componentId = getComponentId(name, importCollection, relativeFilePath);
 
-  const instance: Instance = {
+  const instance: ComponentInstance = {
     type: 'instance',
     componentName: name,
     componentId,
