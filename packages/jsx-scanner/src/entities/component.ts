@@ -1,11 +1,36 @@
 import { isBuiltInHtml } from '../guards/built-in-html.ts';
 import { isBuiltInSvg } from '../guards/built-in-svg.ts';
-import { FilePath } from './file.ts';
-import { ImportCollection } from './import.ts';
+import { type FilePath } from './file.ts';
+import { type ImportCollection, type ImportPath } from './import.ts';
+import type { Position } from './position.ts';
+import type { Props } from './prop.ts';
 import { createUniqueId, type UniqueId } from './unique-id.ts';
 
 export type ComponentId = `${'html' | 'svg' | 'jsx'}:${UniqueId}`;
 export type ComponentName = string;
+
+export type ComponentDefinition = {
+  type: 'definition';
+  componentName: ComponentName;
+  componentId: ComponentId;
+  filePath: FilePath;
+  positionPath: string;
+  startPosition: Position;
+  endPosition: Position;
+};
+
+export type ComponentInstance = {
+  type: 'instance';
+  componentName: ComponentName;
+  componentId: ComponentId;
+  filePath: FilePath;
+  importPath?: ImportPath;
+  positionPath: string;
+  isSelfClosing: boolean;
+  props: Props;
+  startPosition: Position;
+  endPosition: Position;
+};
 
 export function getComponentId(
   name: ComponentName,
