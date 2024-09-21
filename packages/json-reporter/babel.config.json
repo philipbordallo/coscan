@@ -1,0 +1,3 @@
+{
+  "extends": "@coscan/babel-config"
+}

@@ -8,6 +8,10 @@ async function main() {
       'src/components/simple-component.tsx',
       'src/components/entry-component.tsx',
     ],
+    reporter: {
+      type: 'json',
+      detail: 'raw',
+    },
   });
 
   await writeFile('output.json', JSON.stringify(results, null, 2));

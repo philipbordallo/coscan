@@ -1,5 +1,5 @@
 {
-  "name": "coscan",
+  "name": "@coscan/json-reporter",
   "version": "0.1.0",
   "author": "Philip Bordallo",
   "license": "MIT",
@@ -18,10 +18,7 @@
   "browserslist": [
     "extends @coscan/browserslist-config"
   ],
-  "dependencies": {
-    "@coscan/json-reporter": "*",
-    "@coscan/jsx-scanner": "*"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@coscan/rollup": "*"
   },
@@ -38,7 +35,6 @@
     "build": {
       "command": "echo >> /dev/null",
       "dependencies": [
-        "../jsx-scanner:build",
         "rollup:build",
         "type:build"
       ]
@@ -47,7 +43,6 @@
       "command": "cat",
       "service": true,
       "dependencies": [
-        "../jsx-scanner:build",
         "rollup:watch",
         "type:watch"
       ]
