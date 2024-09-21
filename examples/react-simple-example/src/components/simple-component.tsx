@@ -20,12 +20,18 @@ export function SimpleComponent({ disabled }: SimpleComponentProps): JSX.Element
   const handleClick = () => {};
   const value = true;
   return (
-    <button type={`button`} onClick={handleClick} disabled={disabled} autoFocus={false} contentEditable={value}>
+    <button
+      style={{ backgroundColor: 'red' }}
+      type={`button`}
+      onClick={handleClick}
+      disabled={disabled}
+      autoFocus={false}
+      contentEditable={value}
+    >
       Simple Component
     </button>
   );
 }
-
 export function AnotherComponent() {
   const value = true;
   return <button type="button" autoFocus={false} contentEditable={value}>Simple Component</button>;

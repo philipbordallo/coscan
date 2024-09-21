@@ -26,7 +26,9 @@
   "scripts": {
     "clean-cache": "rm -rf packages/*/.wireit/*/cache packages/*/dist packages/*/tsconfig.tsbuildinfo",
     "coscan": "npm -w packages/coscan run --",
+    "json-reporter": "npm -w packages/json-reporter run --",
     "jsx-scanner": "npm -w packages/jsx-scanner run --",
-    "rollup": "npm -w devtools/rollup run --"
+    "rollup": "npm -w devtools/rollup run --",
+    "example": "npm -w examples/react-simple-example run --"
   }
 }
