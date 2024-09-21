@@ -68,7 +68,7 @@ export function functionParser({
 
   const componentId = getComponentId(componentName, importCollection, relativeFilePath);
 
-  const discovery: Definition = {
+  const definition: Definition = {
     type: 'definition',
     componentName,
     componentId,
@@ -78,5 +78,5 @@ export function functionParser({
     endPosition,
   };
 
-  discoveries.push(discovery);
+  discoveries.push(definition);
 }

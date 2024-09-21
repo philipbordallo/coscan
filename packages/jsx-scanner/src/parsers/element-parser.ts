@@ -26,7 +26,7 @@ export function elementParser({ discoveries, node, importCollection, sourceFile 
   const props = getProps(element.attributes, sourceFile);
   const componentId = getComponentId(name, importCollection, relativeFilePath);
 
-  const discovery: Instance = {
+  const instance: Instance = {
     type: 'instance',
     componentName: name,
     componentId,
@@ -39,5 +39,5 @@ export function elementParser({ discoveries, node, importCollection, sourceFile 
     endPosition,
   };
 
-  discoveries.push(discovery);
+  discoveries.push(instance);
 }
