@@ -28,6 +28,6 @@
     "build": "turbo run build",
     "start": "turbo run start",
     "clean": "turbo run clean",
-    "test": "turbo run test"
+    "test": "jest"
   }
 }
