@@ -25,14 +25,6 @@
       "cache": false,
       "persistent": true
     },
-    "test": {
-      "dependsOn": ["^test"],
-      "cache": false
-    },
-    "test:watch": {
-      "dependsOn": ["^test:watch"],
-      "cache": false
-    },
     "type": {
       "dependsOn": ["^type"],
       "cache": true,
