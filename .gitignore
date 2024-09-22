@@ -6,8 +6,8 @@ dist/
 output.json
 tsconfig.tsbuildinfo
 
-# Cache directory for wireit
-.wireit/
+# Cache directory for turbo
+.turbo/
 
 # node.js packages
 node_modules/

@@ -10,6 +10,7 @@
     "examples/*",
     "packages/*"
   ],
+  "packageManager": "npm@10.8.2",
   "dependencies": {},
   "devDependencies": {
     "@dprint/json": "^0.19.3",
@@ -19,16 +20,14 @@
     "@types/node": "^22.5.4",
     "dprint": "^0.47.2",
     "jest": "^29.7.0",
-    "typescript": "^5.6.2",
-    "wireit": "^0.14.9"
+    "turbo": "^2.1.2",
+    "typescript": "^5.6.2"
   },
   "peerDependencies": {},
   "scripts": {
-    "clean-cache": "rm -rf packages/*/.wireit/*/cache packages/*/dist packages/*/tsconfig.tsbuildinfo",
-    "coscan": "npm -w packages/coscan run --",
-    "json-reporter": "npm -w packages/json-reporter run --",
-    "jsx-scanner": "npm -w packages/jsx-scanner run --",
-    "rollup": "npm -w devtools/rollup run --",
-    "example": "npm -w examples/react-simple-example run --"
+    "build": "turbo run build",
+    "start": "turbo run start",
+    "clean": "turbo run clean",
+    "test": "turbo run test"
   }
 }

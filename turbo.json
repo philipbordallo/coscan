@@ -1,0 +1,50 @@
+{
+  "$schema": "https://turborepo.org/schema.json",
+  "remoteCache": {
+    "enabled": false
+  },
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build", "^type"],
+      "cache": true,
+      "outputs": [
+        "dist/**/*.js",
+        "dist/**/*.cjs"
+      ]
+    },
+    "build:watch": {
+      "dependsOn": ["^build:watch"],
+      "cache": false
+    },
+    "clean": {
+      "dependsOn": ["^clean"],
+      "cache": false
+    },
+    "start": {
+      "dependsOn": ["^build:watch", "^type:watch"],
+      "cache": false,
+      "persistent": true
+    },
+    "test": {
+      "dependsOn": ["^test"],
+      "cache": false
+    },
+    "test:watch": {
+      "dependsOn": ["^test:watch"],
+      "cache": false
+    },
+    "type": {
+      "dependsOn": ["^type"],
+      "cache": true,
+      "outputs": [
+        "dist/**/*.d.ts",
+        "dist/**/*.d.ts.map",
+        "tsconfig.tsbuildinfo"
+      ]
+    },
+    "type:watch": {
+      "dependsOn": [],
+      "cache": false
+    }
+  }
+}
