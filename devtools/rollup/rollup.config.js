@@ -25,4 +25,7 @@ export default defineConfig({
       extensions: ['.ts'],
     }),
   ],
+  watch: {
+    clearScreen: false,
+  },
 });

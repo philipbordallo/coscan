@@ -52,5 +52,8 @@ export function createRollupConfig(pkg: Package) {
         extensions: ['.ts'],
       }),
     ],
+    watch: {
+      clearScreen: false,
+    },
   });
 }
