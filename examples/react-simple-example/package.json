@@ -15,7 +15,6 @@
   },
   "peerDependencies": {},
   "scripts": {
-    "start": "node ./output.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "output": "node ./output.js"
   }
 }

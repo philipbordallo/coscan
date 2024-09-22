@@ -28,6 +28,9 @@
   "peerDependencies": {},
   "scripts": {
     "build": "rollup -c ./rollup.config.js",
-    "types": "tsc"
+    "build:watch": "rollup -c ./rollup.config.js --watch",
+    "clean": "rm -rf .turbo/ && rm -rf dist/ && rm -rf tsconfig.tsbuildinfo",
+    "type": "tsc --build --pretty",
+    "type:watch": "tsc --build --preserveWatchOutput --watch"
   }
 }
