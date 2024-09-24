@@ -11,7 +11,7 @@ import { getComponentId } from '../entities/component.ts';
 import type { ComponentDefinition } from '../entities/component.ts';
 import { getRelativeFilePath } from '../entities/file.ts';
 import type { ImportCollection } from '../entities/import.ts';
-import { getPosition } from '../entities/position.ts';
+import { getPosition, getPositionPath } from '../entities/position.ts';
 import type { JsxScannerDiscovery } from '../entities/scanner.ts';
 import { isElementReturn } from '../guards/element-return.ts';
 
@@ -61,9 +61,10 @@ export function functionParser({
   const startPosition = getPosition(node.getStart(sourceFile), sourceFile);
   const endPosition = getPosition(node.getEnd(), sourceFile);
 
-  const componentName = givenName?.getText(sourceFile) ?? '';
   const relativeFilePath = getRelativeFilePath(sourceFile);
+  const positionPath = getPositionPath(startPosition, relativeFilePath);
 
+  const componentName = givenName?.getText(sourceFile) ?? '';
   const componentId = getComponentId(componentName, importCollection, relativeFilePath);
 
   const definition: ComponentDefinition = {
@@ -71,7 +72,7 @@ export function functionParser({
     componentName,
     componentId,
     filePath: relativeFilePath,
-    positionPath: `${relativeFilePath}:${startPosition.line}:${startPosition.character}`,
+    positionPath,
     startPosition,
     endPosition,
   };
