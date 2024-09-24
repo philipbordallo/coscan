@@ -2,7 +2,7 @@ import { isBuiltInHtml } from '../guards/built-in-html.ts';
 import { isBuiltInSvg } from '../guards/built-in-svg.ts';
 import { type FilePath } from './file.ts';
 import { type ImportCollection, type ImportPath } from './import.ts';
-import type { Position } from './position.ts';
+import type { Position, PositionPath } from './position.ts';
 import type { Props } from './prop.ts';
 import { createUniqueId, type UniqueId } from './unique-id.ts';
 
@@ -14,7 +14,7 @@ export type ComponentDefinition = {
   componentName: ComponentName;
   componentId: ComponentId;
   filePath: FilePath;
-  positionPath: string;
+  positionPath: PositionPath;
   startPosition: Position;
   endPosition: Position;
 };
@@ -25,7 +25,7 @@ export type ComponentInstance = {
   componentId: ComponentId;
   filePath: FilePath;
   importPath?: ImportPath;
-  positionPath: string;
+  positionPath: PositionPath;
   isSelfClosing: boolean;
   props: Props;
   startPosition: Position;

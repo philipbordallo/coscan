@@ -5,6 +5,7 @@ import {
   isFunctionExpression,
   isImportClause,
   isJsxElement,
+  isJsxFragment,
   isJsxSelfClosingElement,
   isVariableDeclaration,
   type ModuleResolutionCache,
@@ -16,6 +17,7 @@ import {
 import { type ImportCollection } from '../entities/import.ts';
 import { type JsxScannerDiscovery } from '../entities/scanner.ts';
 import { elementParser } from './element-parser.ts';
+import { fragmentParser } from './fragment-parser.ts';
 import { functionParser } from './function-parser.ts';
 import { importParser } from './import-parser.ts';
 
@@ -56,6 +58,10 @@ export function parser({
 
     if (isJsxElement(node) || isJsxSelfClosingElement(node)) {
       elementParser({ discoveries, importCollection, node, sourceFile });
+    }
+
+    if (isJsxFragment(node)) {
+      fragmentParser({ discoveries, importCollection, node, sourceFile });
     }
 
     if (isImportClause(node)) {
