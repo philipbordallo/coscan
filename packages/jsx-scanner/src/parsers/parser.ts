@@ -19,7 +19,7 @@ import { elementParser } from './element-parser.ts';
 import { functionParser } from './function-parser.ts';
 import { importParser } from './import-parser.ts';
 
-type ParserArgs = {
+export type ParserArgs = {
   discoveries: JsxScannerDiscovery[];
   importCollection: ImportCollection;
   sourceFile: SourceFile;
