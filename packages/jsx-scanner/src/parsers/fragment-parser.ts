@@ -15,12 +15,12 @@ type FragmentParserArgs = {
 export function fragmentParser({ node, sourceFile, importCollection, discoveries }: FragmentParserArgs) {
   const startPosition = getPosition(node.getStart(sourceFile), sourceFile);
   const endPosition = getPosition(node.getEnd(), sourceFile);
+
   const relativeFilePath = getRelativeFilePath(sourceFile);
+  const positionPath = getPositionPath(startPosition, relativeFilePath);
 
   const componentName: ComponentName = 'Fragment';
-
   const componentId = getComponentId(componentName, importCollection, relativeFilePath);
-  const positionPath = getPositionPath(startPosition, relativeFilePath);
 
   const instance: ComponentInstance = {
     type: 'instance',
