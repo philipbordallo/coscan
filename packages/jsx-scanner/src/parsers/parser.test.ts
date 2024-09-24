@@ -194,6 +194,20 @@ describe(parser, () => {
     expect(output.discoveries).toHaveLength(0);
   });
 
+  it('works with fragments', () => {
+    const output = renderWithConfig(`
+      import React, { Fragment } from 'react';
+      function App() {
+        return <>Hello</>;
+      }
+    `);
+
+    const parse = parser(output);
+    parse(output.sourceFile);
+
+    expect(output.discoveries).toHaveLength(2);
+  });
+
   it('works with unresolved imports', () => {
     const output = renderWithConfig(`
       import React from './blah.ts';
