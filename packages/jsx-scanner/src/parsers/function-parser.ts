@@ -28,14 +28,12 @@ function getReturnType(
     return definedReturnType.getText(sourceFile);
   }
 
-  if (!definedReturnType) {
-    const signature = typeChecker.getSignatureFromDeclaration(node);
+  const signature = typeChecker.getSignatureFromDeclaration(node);
 
-    if (signature) {
-      const inferredReturnType = typeChecker.getReturnTypeOfSignature(signature);
+  if (signature) {
+    const inferredReturnType = typeChecker.getReturnTypeOfSignature(signature);
 
-      return typeChecker.typeToString(inferredReturnType);
-    }
+    return typeChecker.typeToString(inferredReturnType);
   }
 }
 
