@@ -1,9 +1,9 @@
-import { jsonReporter, JsonReporterConfig } from '@coscan/json-reporter';
+import { JsonReporter, jsonReporter } from '@coscan/json-reporter';
 import { jsxScanner } from '@coscan/jsx-scanner';
 
-type Reporter = JsonReporterConfig;
+type Reporter = JsonReporter;
 
-const DEFAULT_REPORTER: Reporter = {
+const DEFAULT_REPORTER: JsonReporter = {
   type: 'json',
   detail: 'raw',
 };
@@ -20,6 +20,6 @@ export async function coscan({ files, reporter = DEFAULT_REPORTER }: CoscanConfi
   });
 
   if (reporter.type === 'json') {
-    return jsonReporter(discoveries, reporter);
+    return jsonReporter(discoveries, { detail: reporter.detail });
   }
 }
