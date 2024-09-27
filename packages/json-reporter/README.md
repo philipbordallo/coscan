@@ -22,7 +22,7 @@ async function main() {
     files: ['src/app.tsx'],
   });
 
-  return jsonReporter(discoveries, { type: 'json', details: 'raw' });
+  return jsonReporter(discoveries, { details: 'raw' });
 }
 
 const output = main();

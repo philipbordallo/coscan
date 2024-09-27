@@ -1,1 +1,1 @@
-export { jsonReporter, type JsonReporterConfig } from './reporter.ts';
+export { type JsonReporter, jsonReporter } from './reporter.ts';

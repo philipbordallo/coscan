@@ -30,8 +30,11 @@ type CountItem = {
 
 type JsonReport = RawItem[] | CountItem[];
 
-export type JsonReporterConfig = {
+export type JsonReporter = {
   type: 'json';
+} & JsonReporterConfig;
+
+export type JsonReporterConfig = {
   detail?: 'raw' | 'count';
 };
 
