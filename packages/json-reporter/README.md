@@ -19,13 +19,11 @@ import { jsxScanner } from '@coscan/jsx-scanner';
 
 async function main() {
   const discoveries = await jsxScanner({
-    files,
+    files: ['src/app.tsx'],
   });
 
-  if (reporter.type === 'json') {
-    return jsonReporter(discoveries, { type: 'json', details: 'raw' });
-  }
+  return jsonReporter(discoveries, { type: 'json', details: 'raw' });
 }
 
-main();
+const output = main();
 ```
