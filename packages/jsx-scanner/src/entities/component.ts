@@ -14,7 +14,7 @@ export type ComponentDefinition = {
   componentName: ComponentName;
   componentId: ComponentId;
   filePath: FilePath;
-  positionPath: PositionPath;
+  location: PositionPath;
   startPosition: Position;
   endPosition: Position;
 };
@@ -23,9 +23,9 @@ export type ComponentInstance = {
   type: 'instance';
   componentName: ComponentName;
   componentId: ComponentId;
+  importedFrom?: ImportPath;
   filePath: FilePath;
-  importPath?: ImportPath;
-  positionPath: PositionPath;
+  location: PositionPath;
   isSelfClosing: boolean;
   props: Props;
   startPosition: Position;

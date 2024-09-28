@@ -32,7 +32,7 @@ export function fragmentParser({
     componentName,
     componentId,
     filePath: relativeFilePath,
-    positionPath,
+    location: positionPath,
     isSelfClosing: false,
     props: {},
     startPosition,
