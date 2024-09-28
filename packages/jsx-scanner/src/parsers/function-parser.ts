@@ -72,7 +72,7 @@ export function functionParser({
     componentName,
     componentId,
     filePath: relativeFilePath,
-    positionPath,
+    location: positionPath,
     startPosition,
     endPosition,
   };
