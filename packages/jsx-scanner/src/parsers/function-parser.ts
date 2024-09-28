@@ -38,21 +38,21 @@ function getReturnType(
 }
 
 type FunctionParserArgs = {
+  discoveries: JsxScannerDiscovery[];
+  givenName?: Identifier | BindingName;
+  importCollection: ImportCollection;
   node: FunctionNode;
   sourceFile: SourceFile;
   typeChecker: TypeChecker;
-  givenName?: Identifier | BindingName;
-  importCollection: ImportCollection;
-  discoveries: JsxScannerDiscovery[];
 };
 
 export function functionParser({
+  discoveries,
+  givenName,
+  importCollection,
   node,
   sourceFile,
   typeChecker,
-  givenName,
-  importCollection,
-  discoveries,
 }: FunctionParserArgs) {
   const returnType = getReturnType(node, sourceFile, typeChecker);
 
@@ -61,7 +61,7 @@ export function functionParser({
   const startPosition = getPosition(node.getStart(sourceFile), sourceFile);
   const endPosition = getPosition(node.getEnd(), sourceFile);
 
-  const relativeFilePath = getRelativeFilePath(sourceFile);
+  const relativeFilePath = getRelativeFilePath(sourceFile.fileName);
   const positionPath = getPositionPath(startPosition, relativeFilePath);
 
   const componentName = givenName?.getText(sourceFile) ?? '';

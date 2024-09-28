@@ -8,20 +8,25 @@ import { getProps } from '../entities/prop.ts';
 import type { JsxScannerDiscovery } from '../entities/scanner.ts';
 
 type ElementParserArgs = {
-  node: JsxElement | JsxSelfClosingElement;
-  importCollection: ImportCollection;
-  sourceFile: SourceFile;
   discoveries: JsxScannerDiscovery[];
+  importCollection: ImportCollection;
+  node: JsxElement | JsxSelfClosingElement;
+  sourceFile: SourceFile;
 };
 
-export function elementParser({ discoveries, node, importCollection, sourceFile }: ElementParserArgs) {
+export function elementParser({
+  discoveries,
+  importCollection,
+  node,
+  sourceFile,
+}: ElementParserArgs) {
   const startPosition = getPosition(node.getStart(sourceFile), sourceFile);
   const endPosition = getPosition(node.getEnd(), sourceFile);
 
   const isSelfClosing = isJsxSelfClosingElement(node);
   const element = isSelfClosing ? node : node.openingElement;
 
-  const relativeFilePath = getRelativeFilePath(sourceFile);
+  const relativeFilePath = getRelativeFilePath(sourceFile.fileName);
   const positionPath = getPositionPath(startPosition, relativeFilePath);
 
   const componentName: ComponentName = element.tagName.getText(sourceFile);

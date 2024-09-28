@@ -1,3 +1,4 @@
+import path from 'node:path';
 import {
   type CompilerOptions,
   createCompilerHost,
@@ -26,18 +27,21 @@ export async function jsxScanner(config: JsxScannerConfig): Promise<JsxScannerDi
   const host = createCompilerHost(compilerOptions);
 
   const program = createProgram(
-    config.files,
+    // Make sure files are resolved to absolute paths
+    config.files.map((file) => path.resolve(file)),
     compilerOptions,
     host,
   );
 
+  const currentDirectory = program.getCurrentDirectory();
   const sourceFiles = program.getSourceFiles();
+  const typeChecker = program.getTypeChecker();
+
   const moduleResolutionCache = createModuleResolutionCache(
-    process.cwd(),
+    currentDirectory,
     host.getCanonicalFileName,
     compilerOptions,
   );
-  const typeChecker = program.getTypeChecker();
 
   sourceFiles.forEach((sourceFile) => {
     // Skip declaration files
@@ -47,11 +51,11 @@ export async function jsxScanner(config: JsxScannerConfig): Promise<JsxScannerDi
 
     // Parse the source file
     const parse = parser({
+      compilerOptions,
       discoveries,
-      sourceFile,
       importCollection,
       moduleResolutionCache,
-      compilerOptions,
+      sourceFile,
       typeChecker,
     });
 

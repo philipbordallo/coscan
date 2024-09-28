@@ -31,56 +31,73 @@ export type ParserArgs = {
 };
 
 export function parser({
-  sourceFile,
+  compilerOptions,
+  discoveries,
   importCollection,
   moduleResolutionCache,
-  compilerOptions,
+  sourceFile,
   typeChecker,
-  discoveries,
 }: ParserArgs) {
   return (node: Node) => {
     if (isFunctionDeclaration(node)) {
-      functionParser({ discoveries, importCollection, node, sourceFile, typeChecker, givenName: node.name });
+      functionParser({
+        discoveries,
+        givenName: node.name,
+        importCollection,
+        node,
+        sourceFile,
+        typeChecker,
+      });
     }
 
     if (isVariableDeclaration(node) && node.initializer) {
       if (isFunctionExpression(node.initializer) || isArrowFunction(node.initializer)) {
         functionParser({
           discoveries,
+          givenName: node.name,
           importCollection,
           node: node.initializer,
           sourceFile,
           typeChecker,
-          givenName: node.name,
         });
       }
     }
 
     if (isJsxElement(node) || isJsxSelfClosingElement(node)) {
-      elementParser({ discoveries, importCollection, node, sourceFile });
+      elementParser({
+        discoveries,
+        importCollection,
+        node,
+        sourceFile,
+      });
     }
 
     if (isJsxFragment(node)) {
-      fragmentParser({ discoveries, importCollection, node, sourceFile });
+      fragmentParser({
+        discoveries,
+        importCollection,
+        node,
+        sourceFile,
+      });
     }
 
     if (isImportClause(node)) {
       importParser({
+        compilerOptions,
         importCollection,
+        moduleResolutionCache,
         node,
         sourceFile,
-        moduleResolutionCache,
-        compilerOptions,
         system,
       });
     }
 
     const parse = parser({
+      compilerOptions,
       discoveries,
-      sourceFile,
       importCollection,
       moduleResolutionCache,
-      compilerOptions,
+      sourceFile,
       typeChecker,
     });
 

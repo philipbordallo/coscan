@@ -7,16 +7,21 @@ import type { JsxScannerDiscovery } from '../entities/scanner.ts';
 
 type FragmentParserArgs = {
   discoveries: JsxScannerDiscovery[];
-  node: JsxFragment;
   importCollection: ImportCollection;
+  node: JsxFragment;
   sourceFile: SourceFile;
 };
 
-export function fragmentParser({ node, sourceFile, importCollection, discoveries }: FragmentParserArgs) {
+export function fragmentParser({
+  discoveries,
+  importCollection,
+  node,
+  sourceFile,
+}: FragmentParserArgs) {
   const startPosition = getPosition(node.getStart(sourceFile), sourceFile);
   const endPosition = getPosition(node.getEnd(), sourceFile);
 
-  const relativeFilePath = getRelativeFilePath(sourceFile);
+  const relativeFilePath = getRelativeFilePath(sourceFile.fileName);
   const positionPath = getPositionPath(startPosition, relativeFilePath);
 
   const componentName: ComponentName = 'Fragment';

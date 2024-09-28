@@ -6,24 +6,24 @@ import {
   type SourceFile,
   type System,
 } from 'typescript';
-import { FilePath } from '../entities/file.ts';
+import { type FilePath, getRelativeFilePath } from '../entities/file.ts';
 import { type ImportCollection, ImportPath } from '../entities/import.ts';
 
 type ImportParserArgs = {
-  node: ImportClause;
-  sourceFile: SourceFile;
+  compilerOptions: CompilerOptions;
   importCollection: ImportCollection;
   moduleResolutionCache: ModuleResolutionCache;
-  compilerOptions: CompilerOptions;
+  node: ImportClause;
+  sourceFile: SourceFile;
   system: System;
 };
 
 export function importParser({
-  node,
-  sourceFile,
+  compilerOptions,
   importCollection,
   moduleResolutionCache,
-  compilerOptions,
+  node,
+  sourceFile,
   system,
 }: ImportParserArgs) {
   const importedFrom = node.parent?.moduleSpecifier
@@ -43,7 +43,7 @@ export function importParser({
 
   const resolvedImportPath: ImportPath = resolvedModule.isExternalLibraryImport
     ? importedFrom
-    : resolvedModule.resolvedFileName;
+    : getRelativeFilePath(resolvedModule.resolvedFileName);
 
   if (node.name) {
     const name = node.name.getText(sourceFile);

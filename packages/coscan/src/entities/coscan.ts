@@ -14,7 +14,10 @@ export type CoscanConfig = {
   reporter?: Reporter;
 };
 
-export async function coscan({ files, reporter = DEFAULT_REPORTER }: CoscanConfig) {
+export async function coscan({
+  files,
+  reporter = DEFAULT_REPORTER,
+}: CoscanConfig) {
   const discoveries = await jsxScanner({
     files,
   });
