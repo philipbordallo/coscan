@@ -5,7 +5,9 @@
   "author": "Philip Bordallo",
   "license": "MIT",
   "type": "module",
-  "main": "./src/main.ts",
+  "entry": {
+    "main": "./src/main.ts"
+  },
   "exports": {
     ".": {
       "import": "./dist/main.js",

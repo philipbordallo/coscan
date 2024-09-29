@@ -1,27 +1,32 @@
 import pluginBabel from '@rollup/plugin-babel';
 import pluginNodeResolve from '@rollup/plugin-node-resolve';
-import { defineConfig, type OutputOptions } from 'rollup';
+import {
+  defineConfig,
+  type ExternalOption,
+  type InputPluginOption,
+  type OutputOptions,
+  type RollupOptions,
+  type WatcherOptions,
+} from 'rollup';
 
-type PackageExports = Record<string, { import: string; require: string; types: string }> | string;
-
-function getOutput(pkgExports: PackageExports): OutputOptions[] {
-  if (typeof pkgExports === 'string') {
+function getOutput(pkg: Package): OutputOptions[] {
+  if (typeof pkg.exports === 'string') {
     return [
       {
-        file: pkgExports,
+        file: pkg.exports,
         format: 'esm',
       },
     ];
   }
 
-  if (pkgExports['.']) {
+  if (pkg.exports['.']) {
     return [
       {
-        file: pkgExports['.'].import,
+        file: pkg.exports['.'].import,
         format: 'esm',
       },
       {
-        file: pkgExports['.'].require,
+        file: pkg.exports['.'].require,
         format: 'cjs',
       },
     ];
@@ -30,30 +35,62 @@ function getOutput(pkgExports: PackageExports): OutputOptions[] {
   throw new Error('Invalid package `exports` field.');
 }
 
+type PackageExport = {
+  import: string;
+  require: string;
+  types: string;
+};
+
 type Package = {
   main: string;
-  exports: PackageExports;
+  entry: {
+    main: string;
+    cli?: string;
+  };
+  exports: Record<string, PackageExport> | string;
+  bin?: string;
 };
 
 export function createRollupConfig(pkg: Package) {
-  const output = getOutput(pkg.exports);
+  const output = getOutput(pkg);
 
-  return defineConfig({
-    input: pkg.main,
+  const external: ExternalOption = [
+    /@coscan/,
+    /node_modules/,
+  ];
+  const plugins: InputPluginOption = [
+    pluginNodeResolve(),
+    pluginBabel({
+      babelHelpers: 'runtime',
+      extensions: ['.ts'],
+    }),
+  ];
+
+  const watch: WatcherOptions = {
+    clearScreen: false,
+  };
+
+  const configs: RollupOptions[] = [{
+    input: pkg.entry.main,
     output,
-    external: [
-      /@coscan/,
-      /node_modules/,
-    ],
-    plugins: [
-      pluginNodeResolve(),
-      pluginBabel({
-        babelHelpers: 'runtime',
-        extensions: ['.ts'],
-      }),
-    ],
-    watch: {
-      clearScreen: false,
-    },
-  });
+    external,
+    plugins,
+    watch,
+  }];
+
+  if (pkg.bin) {
+    configs.push({
+      input: pkg.entry.cli,
+      output: {
+        file: pkg.bin,
+        format: 'esm',
+        banner: '#!/usr/bin/env node',
+      },
+      external,
+      plugins,
+      watch,
+    });
+  }
+
+  return defineConfig(configs);
 }

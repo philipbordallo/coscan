@@ -4,7 +4,7 @@ import { defineConfig } from 'rollup';
 import pkg from './package.json' with { type: 'json' };
 
 export default defineConfig({
-  input: pkg.main,
+  input: pkg.entry.main,
   output: [
     {
       file: pkg.exports['.'].import,
