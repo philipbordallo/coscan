@@ -1,7 +1,7 @@
 import { JsonReporter, jsonReporter } from '@coscan/json-reporter';
 import { jsxScanner } from '@coscan/jsx-scanner';
 
-type Reporter = JsonReporter;
+export type Reporter = JsonReporter;
 
 const DEFAULT_REPORTER: JsonReporter = {
   type: 'json',

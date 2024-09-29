@@ -5,6 +5,7 @@
   "license": "MIT",
   "type": "module",
   "entry": {
+    "cli": "./src/cli.ts",
     "main": "./src/main.ts"
   },
   "exports": {
@@ -22,7 +23,10 @@
   ],
   "dependencies": {
     "@coscan/json-reporter": "*",
-    "@coscan/jsx-scanner": "*"
+    "@coscan/jsx-scanner": "*",
+    "chalk": "^5.3.0",
+    "meow": "^13.2.0",
+    "ora": "^8.1.0"
   },
   "devDependencies": {
     "@coscan/rollup": "*"
