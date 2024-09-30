@@ -28,6 +28,8 @@
     "build": "turbo run build",
     "start": "turbo run start",
     "clean": "turbo run clean",
-    "test": "jest"
+    "publish": "npm run build && npm run test && npm publish -w packages",
+    "test": "jest",
+    "version": "npm version -w packages"
   }
 }
