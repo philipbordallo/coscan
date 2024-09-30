@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "author": "Philip Bordallo",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "entry": {
     "main": "./src/main.ts"
