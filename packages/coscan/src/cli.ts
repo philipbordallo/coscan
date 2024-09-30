@@ -92,7 +92,7 @@ async function handleSuccess(data: RunData) {
   }
 
   spinner.succeed('Scanning complete!');
-  console.log(data.results);
+  process.stdout.write(`${data.results}\n`);
 }
 
 function handleError(error: Error) {
