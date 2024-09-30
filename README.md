@@ -13,11 +13,11 @@ Check out the [coscan package documentation][coscan] for more information.
 
 ### Packages
 
-| Name                                     | Description                  |
-| ---------------------------------------- | ---------------------------- |
-| [`coscan`][coscan]                       | Main package for Node.js API |
-| [`@coscan/json-reporter`][json-reporter] | JSON reporter                |
-| [`@coscan/jsx-scanner`][jsx-scanner]     | JSX scanner                  |
+| Name                                     | Description                          |
+| ---------------------------------------- | ------------------------------------ |
+| [`coscan`][coscan]                       | Main package for CLI and Node.js API |
+| [`@coscan/json-reporter`][json-reporter] | JSON reporter                        |
+| [`@coscan/jsx-scanner`][jsx-scanner]     | JSX scanner                          |
 
 ### Examples
 

@@ -1,6 +1,6 @@
 # [`coscan`](https://www.npmjs.com/package/coscan)
 
-> Node.js API implementation of coscan.
+> CLI and Node.js API implementations of coscan.
 
 ## Installation
 
