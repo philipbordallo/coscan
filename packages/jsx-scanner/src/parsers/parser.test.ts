@@ -263,4 +263,20 @@ describe(parser, () => {
       disabled: true,
     });
   });
+
+  it('works with class components', () => {
+    const output = renderWithConfig(`
+      import React from 'react';
+      class App extends React.Component {
+        render() {
+          return <div>Hello, world!</div>;
+        }
+      }
+    `);
+
+    const parse = parser(output);
+    parse(output.sourceFile);
+
+    expect(output.discoveries).toHaveLength(2);
+  });
 });

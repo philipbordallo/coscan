@@ -30,6 +30,7 @@
     "clean": "turbo run clean",
     "publish": "npm run build && npm run test && npm publish -w packages",
     "test": "jest",
-    "version": "npm version -w packages"
+    "version": "npm version -w packages",
+    "example": "node packages/coscan/dist/cli.js examples/react-simple-example/src/components/class-component.tsx"
   }
 }

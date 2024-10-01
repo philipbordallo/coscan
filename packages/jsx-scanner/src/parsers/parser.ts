@@ -1,8 +1,12 @@
 import {
   type CompilerOptions,
   isArrowFunction,
+  isClassDeclaration,
+  isClassExpression,
+  isClassLike,
   isFunctionDeclaration,
   isFunctionExpression,
+  isIdentifier,
   isImportClause,
   isJsxElement,
   isJsxFragment,
@@ -16,6 +20,7 @@ import {
 } from 'typescript';
 import { type ImportCollection } from '../entities/import.ts';
 import { type JsxScannerDiscovery } from '../entities/scanner.ts';
+import { classParser } from './class-parser.ts';
 import { elementParser } from './element-parser.ts';
 import { fragmentParser } from './fragment-parser.ts';
 import { functionParser } from './function-parser.ts';
@@ -61,6 +66,21 @@ export function parser({
           typeChecker,
         });
       }
+    }
+
+    if (isClassLike(node)) {
+      // If class is an expression, get parent node to determine given name
+      const givenName = isClassExpression(node) && isVariableDeclaration(node.parent) && isIdentifier(node.parent.name)
+        ? node.parent.name
+        : node.name;
+
+      classParser({
+        discoveries,
+        givenName,
+        importCollection,
+        node,
+        sourceFile,
+      });
     }
 
     if (isJsxElement(node) || isJsxSelfClosingElement(node)) {
