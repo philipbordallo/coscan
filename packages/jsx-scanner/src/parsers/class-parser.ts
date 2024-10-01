@@ -13,9 +13,6 @@ import type { JsxScannerDiscovery } from '../entities/scanner.ts';
 
 const REACT_BASE_CLASSES = ['Component', 'PureComponent'];
 
-type PropString = `${string}: ${string};` | `${string}: ${string},` | string & {};
-type Props = Record<string, unknown>;
-
 function getClassType(
   expressions: ExpressionWithTypeArguments[],
   typeChecker: TypeChecker,
