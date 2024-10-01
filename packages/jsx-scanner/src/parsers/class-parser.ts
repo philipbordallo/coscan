@@ -70,8 +70,6 @@ export function classParser({
     location: positionPath,
     startPosition,
     endPosition,
-    // @ts-ignore
-    props: props,
   };
 
   discoveries.push(definition);
