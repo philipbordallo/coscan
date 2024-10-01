@@ -69,7 +69,7 @@ export function parser({
     }
 
     if (isClassLike(node)) {
-      // If class is an expression, get parent node to determine given name
+      // If node is a class expression, get parent node to determine given name
       const givenName = isClassExpression(node) && isVariableDeclaration(node.parent) && isIdentifier(node.parent.name)
         ? node.parent.name
         : node.name;
@@ -80,6 +80,7 @@ export function parser({
         importCollection,
         node,
         sourceFile,
+        typeChecker,
       });
     }
 

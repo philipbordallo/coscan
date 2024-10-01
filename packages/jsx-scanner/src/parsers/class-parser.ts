@@ -1,9 +1,9 @@
 import {
   type ClassLikeDeclaration,
-  type HeritageClause,
+  type ExpressionWithTypeArguments,
   type Identifier,
-  type NodeArray,
   type SourceFile,
+  type TypeChecker,
 } from 'typescript';
 import { type ComponentDefinition, getComponentId } from '../entities/component.ts';
 import { getRelativeFilePath } from '../entities/file.ts';
@@ -11,14 +11,19 @@ import type { ImportCollection } from '../entities/import.ts';
 import { getPosition, getPositionPath } from '../entities/position.ts';
 import type { JsxScannerDiscovery } from '../entities/scanner.ts';
 
-const REACT_BASE_CLASSES = ['React.Component', 'React.PureComponent', 'Component', 'PureComponent'];
+const REACT_BASE_CLASSES = ['Component', 'PureComponent'];
 
-function isReactComponentDescendant(heritageClauses: NodeArray<HeritageClause>, sourceFile?: SourceFile): boolean {
-  const heritageExpressions = heritageClauses.flatMap((clause) =>
-    clause.types.map((type) => type.expression.getText(sourceFile))
-  );
+type PropString = `${string}: ${string};` | `${string}: ${string},` | string & {};
+type Props = Record<string, unknown>;
 
-  return heritageExpressions.some((expression) => REACT_BASE_CLASSES.includes(expression));
+function getClassType(
+  expressions: ExpressionWithTypeArguments[],
+  typeChecker: TypeChecker,
+): string {
+  const baseTypes = expressions?.map((expression) => typeChecker.getTypeAtLocation(expression));
+  const name = baseTypes?.map((type) => type.getSymbol()?.getName()).join('');
+
+  return name;
 }
 
 type ClassParserArgs = {
@@ -27,6 +32,7 @@ type ClassParserArgs = {
   importCollection: ImportCollection;
   node: ClassLikeDeclaration;
   sourceFile: SourceFile;
+  typeChecker: TypeChecker;
 };
 
 export function classParser({
@@ -35,9 +41,18 @@ export function classParser({
   importCollection,
   node,
   sourceFile,
+  typeChecker,
 }: ClassParserArgs) {
-  // Ignore classes that don't have a lineage or aren't descendants of React.Component or React.PureComponent
-  if (!node.heritageClauses || !isReactComponentDescendant(node.heritageClauses, sourceFile)) {
+  // If class does not extend any base classes, skip
+  if (!node.heritageClauses) {
+    return;
+  }
+
+  const expressionsWithTypeArguments = node.heritageClauses.flatMap((clause) => clause.types);
+  const classType = getClassType(expressionsWithTypeArguments, typeChecker);
+
+  // If class is not a React component, skip
+  if (!REACT_BASE_CLASSES.includes(classType)) {
     return;
   }
 
@@ -58,6 +73,8 @@ export function classParser({
     location: positionPath,
     startPosition,
     endPosition,
+    // @ts-ignore
+    props: props,
   };
 
   discoveries.push(definition);
