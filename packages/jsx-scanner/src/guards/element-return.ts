@@ -4,6 +4,7 @@ export function isElementReturn(returnType: string): returnType is ElementReturn
   switch (returnType) {
     case 'ReactElement':
     case 'ReactNode':
+    case 'React.ReactElement':
     case 'React.JSX.Element':
     case 'JSX.Element':
     case 'Element':

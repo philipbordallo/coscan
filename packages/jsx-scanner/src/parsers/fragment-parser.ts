@@ -24,7 +24,7 @@ export function fragmentParser({
   const relativeFilePath = getRelativeFilePath(sourceFile.fileName);
   const positionPath = getPositionPath(startPosition, relativeFilePath);
 
-  const componentName: ComponentName = 'Fragment';
+  const componentName: ComponentName = 'React.Fragment';
   const componentId = getComponentId(componentName, importCollection, relativeFilePath);
 
   const instance: ComponentInstance = {
