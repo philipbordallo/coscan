@@ -2,12 +2,19 @@ import {
   type CompilerOptions,
   type ImportClause,
   type ModuleResolutionCache,
+  type Node,
   resolveModuleName,
   type SourceFile,
   type System,
 } from 'typescript';
 import { type FilePath, getRelativeFilePath } from '../entities/file.ts';
 import { type ImportCollection, ImportPath } from '../entities/import.ts';
+
+function getParentImportName(nameBinding: Node, sourceFile?: SourceFile): string | undefined {
+  const lastToken = nameBinding.getLastToken(sourceFile);
+
+  return lastToken?.getText(sourceFile);
+}
 
 type ImportParserArgs = {
   compilerOptions: CompilerOptions;
@@ -26,13 +33,13 @@ export function importParser({
   sourceFile,
   system,
 }: ImportParserArgs) {
-  const importedFrom = node.parent?.moduleSpecifier
+  const moduleName = node.parent?.moduleSpecifier
     .getText(sourceFile)
     .replace(/['"]+/g, '');
 
   const filePath: FilePath = sourceFile.fileName;
   const { resolvedModule } = resolveModuleName(
-    importedFrom,
+    moduleName,
     filePath,
     compilerOptions,
     system,
@@ -42,17 +49,29 @@ export function importParser({
   if (!resolvedModule) return;
 
   const resolvedImportPath: ImportPath = resolvedModule.isExternalLibraryImport
-    ? importedFrom
+    ? moduleName
     : getRelativeFilePath(resolvedModule.resolvedFileName);
 
+  /**
+   * Handles:
+   * - `import library from 'library'`
+   */
   if (node.name) {
     const name = node.name.getText(sourceFile);
+
     importCollection.set(name, resolvedImportPath);
   }
 
+  /**
+   * Handles:
+   * - `import * as library from 'library'`
+   * - `import { library } from 'library'`
+   * - `import { library as aliasedName } from 'library'`
+   */
   if (node.namedBindings) {
-    node.namedBindings.forEachChild((element) => {
-      const name = element.getText(sourceFile);
+    node.namedBindings.forEachChild((nameBinding) => {
+      const name = getParentImportName(nameBinding, sourceFile) ?? nameBinding.getText(sourceFile);
+
       importCollection.set(name, resolvedImportPath);
     });
   }

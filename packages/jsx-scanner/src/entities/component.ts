@@ -37,7 +37,8 @@ export function getComponentId(
   importCollection: ImportCollection,
   filePath: FilePath,
 ): ComponentId {
-  const importPath = importCollection.get(name);
+  const importName = getParentName(name) ?? name;
+  const importPath = importCollection.get(importName);
 
   if (isBuiltInHtml(name)) {
     const id = createUniqueId(name);
@@ -56,4 +57,18 @@ export function getComponentId(
 
   const id = createUniqueId(`${filePath}:${name}`);
   return `jsx:${id}`;
+}
+
+/** If a name has subparts, get the parent name.
+ *
+ * @example `Table.Header` -> `Table`
+ */
+export function getParentName(name: string): string | undefined {
+  if (name.includes('.')) {
+    const [parent] = name.split('.');
+
+    return parent;
+  }
+
+  return undefined;
 }
