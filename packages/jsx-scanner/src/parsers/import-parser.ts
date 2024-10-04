@@ -13,9 +13,9 @@ import { type ImportCollection, ImportPath } from '../entities/import.ts';
 /**
  * Get an aliased import name from a named import binding.
  * @example
- * `import { thing as other } from 'library'` -> 'other'
+ * `thing as other` -> 'other'
  */
-function getAliasedImportName(nameBinding: Node, sourceFile?: SourceFile): string | undefined {
+function getAliasedName(nameBinding: Node, sourceFile?: SourceFile): string | undefined {
   const lastToken = nameBinding.getLastToken(sourceFile);
 
   return lastToken?.getText(sourceFile);
@@ -75,7 +75,7 @@ export function importParser({
    */
   if (node.namedBindings) {
     node.namedBindings.forEachChild((nameBinding) => {
-      const name = getAliasedImportName(nameBinding, sourceFile) ?? nameBinding.getText(sourceFile);
+      const name = getAliasedName(nameBinding, sourceFile) ?? nameBinding.getText(sourceFile);
 
       importCollection.set(name, resolvedImportPath);
     });

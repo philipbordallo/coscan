@@ -162,7 +162,7 @@ const tests: Test[] = [
       expect(instances).toHaveLength(1);
 
       const importComponent = instances[0];
-      expect(importComponent.componentName).toBe('ButtonComponent');
+      expect(importComponent.componentName).toBe('Button');
     },
   },
 ];
