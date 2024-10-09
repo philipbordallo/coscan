@@ -1,6 +1,7 @@
 import {
   type CompilerOptions,
   isArrowFunction,
+  isCallExpression,
   isClassDeclaration,
   isClassExpression,
   isClassLike,
@@ -14,12 +15,14 @@ import {
   isVariableDeclaration,
   type ModuleResolutionCache,
   type Node,
+  SignatureKind,
   type SourceFile,
   sys as system,
   type TypeChecker,
 } from 'typescript';
 import { type ImportCollection } from '../entities/import.ts';
 import { type JsxScannerDiscovery } from '../entities/scanner.ts';
+import { assignParser } from './assign-parser.ts';
 import { classParser } from './class-parser.ts';
 import { elementParser } from './element-parser.ts';
 import { fragmentParser } from './fragment-parser.ts';
@@ -58,6 +61,17 @@ export function parser({
     if (isVariableDeclaration(node) && node.initializer) {
       if (isFunctionExpression(node.initializer) || isArrowFunction(node.initializer)) {
         functionParser({
+          discoveries,
+          givenName: node.name,
+          importCollection,
+          node: node.initializer,
+          sourceFile,
+          typeChecker,
+        });
+      }
+
+      if (isCallExpression(node.initializer)) {
+        assignParser({
           discoveries,
           givenName: node.name,
           importCollection,

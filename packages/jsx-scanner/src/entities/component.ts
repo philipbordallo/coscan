@@ -37,8 +37,8 @@ export function getComponentId(
   importCollection: ImportCollection,
   filePath: FilePath,
 ): ComponentId {
-  const importName = getParentName(name) ?? name;
-  const importPath = importCollection.get(importName);
+  const parentName = getParentName(name);
+  const importPath = importCollection.get(parentName ?? name);
 
   if (isBuiltInHtml(name)) {
     const id = createUniqueId(name);

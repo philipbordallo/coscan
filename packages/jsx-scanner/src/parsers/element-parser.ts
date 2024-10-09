@@ -1,5 +1,5 @@
 import { isJsxSelfClosingElement, type JsxElement, type JsxSelfClosingElement, type SourceFile } from 'typescript';
-import { type ComponentName, getComponentId } from '../entities/component.ts';
+import { type ComponentName, getComponentId, getParentName } from '../entities/component.ts';
 import type { ComponentInstance } from '../entities/component.ts';
 import { getRelativeFilePath } from '../entities/file.ts';
 import type { ImportCollection } from '../entities/import.ts';
@@ -31,14 +31,16 @@ export function elementParser({
 
   const componentName: ComponentName = element.tagName.getText(sourceFile);
   const componentId = getComponentId(componentName, importCollection, relativeFilePath);
+  const parentName = getParentName(componentName);
 
+  const importPath = importCollection.get(parentName ?? componentName);
   const props = getProps(element.attributes, sourceFile);
 
   const instance: ComponentInstance = {
     type: 'instance',
     componentName,
     componentId,
-    importedFrom: importCollection.get(componentName),
+    importedFrom: importPath,
     filePath: relativeFilePath,
     location: positionPath,
     isSelfClosing,
