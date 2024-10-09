@@ -74,9 +74,9 @@ export function assignParser({
     }
   });
 
-  Object.entries(parts).forEach(([partName, parNode]) => {
-    const startPosition = getPosition(parNode.getStart(sourceFile), sourceFile);
-    const endPosition = getPosition(parNode.getEnd(), sourceFile);
+  Object.entries(parts).forEach(([partName, partNode]) => {
+    const startPosition = getPosition(partNode.getStart(sourceFile), sourceFile);
+    const endPosition = getPosition(partNode.getEnd(), sourceFile);
 
     const relativeFilePath = getRelativeFilePath(sourceFile.fileName);
     const positionPath = getPositionPath(startPosition, relativeFilePath);
