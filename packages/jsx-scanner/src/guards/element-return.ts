@@ -1,6 +1,6 @@
 export type ElementReturn = 'ReactElement' | 'ReactNode' | 'React.JSX.Element' | 'JSX.Element' | 'Element';
 
-export function isElementReturn(returnType: string): returnType is ElementReturn {
+export function isElementReturn(returnType: string | undefined): returnType is ElementReturn {
   switch (returnType) {
     case 'ReactElement':
     case 'ReactNode':

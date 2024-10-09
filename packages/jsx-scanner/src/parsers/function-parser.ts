@@ -56,7 +56,7 @@ export function functionParser({
 }: FunctionParserArgs) {
   const returnType = getReturnType(node, sourceFile, typeChecker);
 
-  if (!returnType || !isElementReturn(returnType)) return;
+  if (!isElementReturn(returnType)) return;
 
   const startPosition = getPosition(node.getStart(sourceFile), sourceFile);
   const endPosition = getPosition(node.getEnd(), sourceFile);

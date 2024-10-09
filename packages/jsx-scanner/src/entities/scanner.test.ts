@@ -162,7 +162,57 @@ const tests: Test[] = [
       expect(instances).toHaveLength(1);
 
       const importComponent = instances[0];
-      expect(importComponent.componentName).toBe('ButtonComponent');
+      expect(importComponent.componentName).toBe('Button');
+    },
+  },
+  {
+    it: 'works with sub-component instances',
+    filePath: 'examples/react-fixtures/src/components/sub-components.tsx',
+    test: async (results) => {
+      const instances = results.filter((result) => result.type === 'instance');
+      expect(instances).toHaveLength(4);
+
+      const table = instances[0];
+      expect(table.componentName).toBe('Table');
+      expect(table.importedFrom).toBe('examples/react-fixtures/src/components/table-component.tsx');
+
+      const row = instances[1];
+      expect(row.componentName).toBe('Table.Row');
+      expect(row.importedFrom).toBe('examples/react-fixtures/src/components/table-component.tsx');
+
+      const cell1 = instances[2];
+      expect(cell1.componentName).toBe('Table.Cell');
+      expect(cell1.importedFrom).toBe('examples/react-fixtures/src/components/table-component.tsx');
+
+      const cell2 = instances[3];
+      expect(cell2.componentName).toBe('Table.Cell');
+      expect(cell2.importedFrom).toBe('examples/react-fixtures/src/components/table-component.tsx');
+    },
+  },
+  {
+    it: 'works with sub-component definitions',
+    filePath: 'examples/react-fixtures/src/components/table-component.tsx',
+    test: async (results) => {
+      const definitions = results.filter((result) => result.type === 'definition');
+      expect(definitions).toHaveLength(6);
+
+      const tableRoot = definitions[0];
+      expect(tableRoot.componentName).toBe('TableRoot');
+
+      const row = definitions[1];
+      expect(row.componentName).toBe('Row');
+
+      const cell = definitions[2];
+      expect(cell.componentName).toBe('Cell');
+
+      const table = definitions[3];
+      expect(table.componentName).toBe('Table');
+
+      const tableRow = definitions[4];
+      expect(tableRow.componentName).toBe('Table.Row');
+
+      const tableCell = definitions[5];
+      expect(tableCell.componentName).toBe('Table.Cell');
     },
   },
 ];
