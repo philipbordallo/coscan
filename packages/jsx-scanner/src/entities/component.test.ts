@@ -1,5 +1,5 @@
 import { describe, expect, it, jest } from '@jest/globals';
-import { getComponentId, getParentName } from './component.ts';
+import { getComponentId } from './component.ts';
 import type { ImportCollection } from './import.ts';
 
 jest.mock('./unique-id.ts', () => ({
@@ -43,15 +43,5 @@ describe(getComponentId, () => {
 
   it('returns a unique id for a sub component using an import', () => {
     expect(getComponentId('Table.Body', importCollection, './file.ts')).toBe('jsx:7');
-  });
-});
-
-describe(getParentName, () => {
-  it('returns a parent name when the name has subparts', () => {
-    expect(getParentName('Table.Header')).toBe('Table');
-  });
-
-  it('returns undefined when the name does not have sub parts', () => {
-    expect(getParentName('Table')).toBeUndefined();
   });
 });

@@ -4,6 +4,7 @@ import { type FilePath } from './file.ts';
 import { type ImportCollection, type ImportPath } from './import.ts';
 import type { Position, PositionPath } from './position.ts';
 import type { Props } from './prop.ts';
+import { getNamespace } from './string.ts';
 import { createUniqueId, type UniqueId } from './unique-id.ts';
 
 export type ComponentId = `${'html' | 'svg' | 'jsx'}:${UniqueId}`;
@@ -37,8 +38,8 @@ export function getComponentId(
   importCollection: ImportCollection,
   filePath: FilePath,
 ): ComponentId {
-  const parentName = getParentName(name);
-  const importPath = importCollection.get(parentName ?? name);
+  const importkey = getNamespace(name) ?? name;
+  const importPath = importCollection.get(importkey);
 
   if (isBuiltInHtml(name)) {
     const id = createUniqueId(name);
@@ -57,18 +58,4 @@ export function getComponentId(
 
   const id = createUniqueId(`${filePath}:${name}`);
   return `jsx:${id}`;
-}
-
-/** If a name has subparts, get the parent name.
- *
- * @example `Table.Header` -> `Table`
- */
-export function getParentName(name: string): string | undefined {
-  if (name.includes('.')) {
-    const [parent] = name.split('.');
-
-    return parent;
-  }
-
-  return undefined;
 }
