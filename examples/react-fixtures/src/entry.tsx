@@ -1,3 +1,4 @@
+import React from 'react';
 import { ButtonComponent as Button } from './components/button-component.tsx';
 import ClassComponent from './components/class-components.tsx';
 import { UnnamedFragmentComponent } from './components/fragment-components.tsx';

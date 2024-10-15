@@ -94,13 +94,16 @@ const tests: Test[] = [
     filePath: 'examples/react-fixtures/src/components/fragment-components.tsx',
     test: async (results) => {
       const instances = results.filter((result) => result.type === 'instance');
-      expect(instances).toHaveLength(2);
+      expect(instances).toHaveLength(3);
 
-      const fragmentComponent = instances[0];
-      expect(fragmentComponent.componentName).toBe('React.Fragment');
+      const unnamedFragmentComponent = instances[0];
+      expect(unnamedFragmentComponent.componentName).toBe('React.Fragment');
 
       const reactFragmentComponent = instances[1];
       expect(reactFragmentComponent.componentName).toBe('React.Fragment');
+
+      const fragmentComponent = instances[2];
+      expect(fragmentComponent.componentName).toBe('Fragment');
     },
   },
   {
