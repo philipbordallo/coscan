@@ -1,6 +1,6 @@
 import { Table } from './table-component';
 
-export function ExampleTable() {
+export function SubComponent() {
   return (
     <Table>
       <Table.Row>
