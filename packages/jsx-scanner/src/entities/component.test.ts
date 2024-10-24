@@ -10,15 +10,18 @@ jest.mock('./unique-id.ts', () => ({
     if (value === 'library:Button') return 5;
     if (value === './file.ts:FileComponent') return 6;
     if (value === 'library:Table.Body') return 7;
+    if (value === 'react:default') return 8;
+
     return 1;
   },
 }));
 
 describe(getComponentId, () => {
   const importCollection: ImportCollection = new Map([
-    ['Example', './example.ts'],
-    ['Button', 'library'],
-    ['Table', 'library'],
+    ['Example', { path: './example.ts', isDefault: false }],
+    ['Button', { path: 'library', isDefault: false }],
+    ['Table', { path: 'library', isDefault: false }],
+    ['React', { path: 'react', isDefault: true }],
   ]);
 
   it('returns a unique id for a built-in HTML component', () => {
@@ -43,5 +46,9 @@ describe(getComponentId, () => {
 
   it('returns a unique id for a sub component using an import', () => {
     expect(getComponentId('Table.Body', importCollection, './file.ts')).toBe('jsx:7');
+  });
+
+  it('returns a unique id for a default import', () => {
+    expect(getComponentId('React', importCollection, './file.ts')).toBe('jsx:8');
   });
 });

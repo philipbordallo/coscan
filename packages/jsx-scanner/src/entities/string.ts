@@ -1,4 +1,4 @@
-/** If a string has subparts, get the namespace, otherwise return the string itself.
+/** If a string has subparts, get the namespace, otherwise return undefined
  *
  * @example `Table.Header` -> `Table`
  */

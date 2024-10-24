@@ -34,7 +34,7 @@ export function elementParser({
   const componentId = getComponentId(componentName, importCollection, relativeFilePath);
 
   const importKey = getNamespace(componentName) ?? componentName;
-  const importPath = importCollection.get(importKey);
+  const importMeta = importCollection.get(importKey);
 
   const props = getProps(element.attributes, sourceFile);
 
@@ -42,7 +42,7 @@ export function elementParser({
     type: 'instance',
     componentName,
     componentId,
-    importedFrom: importPath,
+    importedFrom: importMeta?.path,
     filePath: relativeFilePath,
     location: positionPath,
     isSelfClosing,

@@ -9,6 +9,7 @@ import {
   type TypeChecker,
 } from 'typescript';
 import { type ComponentDefinition, type ComponentName, getComponentId } from '../entities/component.ts';
+import type { GivenName } from '../entities/declaration.ts';
 import { getRelativeFilePath } from '../entities/file.ts';
 import type { ImportCollection } from '../entities/import.ts';
 import { getPosition, getPositionPath } from '../entities/position.ts';
@@ -31,7 +32,7 @@ function isComponentDefinition(node: Node, typeChecker: TypeChecker) {
 
 type AssignParserArgs = {
   discoveries: JsxScannerDiscovery[];
-  givenName: BindingName;
+  givenName: GivenName;
   importCollection: ImportCollection;
   node: CallExpression;
   sourceFile: SourceFile;
@@ -40,7 +41,7 @@ type AssignParserArgs = {
 
 export function assignParser({
   discoveries,
-  givenName,
+  givenName: namespace,
   importCollection,
   node,
   sourceFile,
@@ -53,8 +54,6 @@ export function assignParser({
   const parts: Record<string, Node> = {};
 
   node.arguments.forEach((argument) => {
-    const namespace = givenName.getText(sourceFile);
-
     // If argument is the parent component, example `Table`
     if (isIdentifier(argument)) {
       if (isComponentDefinition(argument, typeChecker)) {

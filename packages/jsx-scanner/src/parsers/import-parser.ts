@@ -64,7 +64,7 @@ export function importParser({
   if (node.name) {
     const name = node.name.getText(sourceFile);
 
-    importCollection.set(name, resolvedImportPath);
+    importCollection.set(name, { path: resolvedImportPath, isDefault: true });
   }
 
   /**
@@ -77,7 +77,7 @@ export function importParser({
     node.namedBindings.forEachChild((nameBinding) => {
       const name = getAliasedName(nameBinding, sourceFile) ?? nameBinding.getText(sourceFile);
 
-      importCollection.set(name, resolvedImportPath);
+      importCollection.set(name, { path: resolvedImportPath, isDefault: false });
     });
   }
 }

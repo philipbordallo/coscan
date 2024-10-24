@@ -1,14 +1,13 @@
 import {
   type ArrowFunction,
-  type BindingName,
   type FunctionDeclaration,
   type FunctionExpression,
-  type Identifier,
   type SourceFile,
   type TypeChecker,
 } from 'typescript';
 import { getComponentId } from '../entities/component.ts';
 import type { ComponentDefinition } from '../entities/component.ts';
+import type { GivenName } from '../entities/declaration.ts';
 import { getRelativeFilePath } from '../entities/file.ts';
 import type { ImportCollection } from '../entities/import.ts';
 import { getPosition, getPositionPath } from '../entities/position.ts';
@@ -39,7 +38,7 @@ function getReturnType(
 
 type FunctionParserArgs = {
   discoveries: JsxScannerDiscovery[];
-  givenName?: Identifier | BindingName;
+  givenName: GivenName;
   importCollection: ImportCollection;
   node: FunctionNode;
   sourceFile: SourceFile;
@@ -48,7 +47,7 @@ type FunctionParserArgs = {
 
 export function functionParser({
   discoveries,
-  givenName,
+  givenName: componentName,
   importCollection,
   node,
   sourceFile,
@@ -64,7 +63,6 @@ export function functionParser({
   const relativeFilePath = getRelativeFilePath(sourceFile.fileName);
   const positionPath = getPositionPath(startPosition, relativeFilePath);
 
-  const componentName = givenName?.getText(sourceFile) ?? '';
   const componentId = getComponentId(componentName, importCollection, relativeFilePath);
 
   const definition: ComponentDefinition = {
