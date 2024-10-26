@@ -6,6 +6,7 @@ import {
   type TypeChecker,
 } from 'typescript';
 import { type ComponentDefinition, getComponentId } from '../entities/component.ts';
+import type { GivenName } from '../entities/declaration.ts';
 import { getRelativeFilePath } from '../entities/file.ts';
 import type { ImportCollection } from '../entities/import.ts';
 import { getPosition, getPositionPath } from '../entities/position.ts';
@@ -25,7 +26,7 @@ function getClassType(
 
 type ClassParserArgs = {
   discoveries: JsxScannerDiscovery[];
-  givenName?: Identifier;
+  givenName: GivenName;
   importCollection: ImportCollection;
   node: ClassLikeDeclaration;
   sourceFile: SourceFile;
@@ -34,7 +35,7 @@ type ClassParserArgs = {
 
 export function classParser({
   discoveries,
-  givenName,
+  givenName: componentName,
   importCollection,
   node,
   sourceFile,
@@ -59,7 +60,6 @@ export function classParser({
   const relativeFilePath = getRelativeFilePath(sourceFile.fileName);
   const positionPath = getPositionPath(startPosition, relativeFilePath);
 
-  const componentName = givenName?.getText(sourceFile) ?? '';
   const componentId = getComponentId(componentName, importCollection, relativeFilePath);
 
   const definition: ComponentDefinition = {

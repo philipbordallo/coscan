@@ -39,7 +39,7 @@ export function getComponentId(
   filePath: FilePath,
 ): ComponentId {
   const importkey = getNamespace(name) ?? name;
-  const importPath = importCollection.get(importkey);
+  const importMeta = importCollection.get(importkey);
 
   if (isBuiltInHtml(name)) {
     const id = createUniqueId(name);
@@ -51,8 +51,13 @@ export function getComponentId(
     return `svg:${id}`;
   }
 
-  if (importPath) {
-    const id = createUniqueId(`${importPath}:${name}`);
+  if (importMeta && importMeta.isDefault) {
+    const id = createUniqueId(`${importMeta.path}:default`);
+    return `jsx:${id}`;
+  }
+
+  if (importMeta && !importMeta.isDefault) {
+    const id = createUniqueId(`${importMeta.path}:${name}`);
     return `jsx:${id}`;
   }
 

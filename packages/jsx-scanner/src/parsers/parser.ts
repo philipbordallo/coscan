@@ -2,12 +2,9 @@ import {
   type CompilerOptions,
   isArrowFunction,
   isCallExpression,
-  isClassDeclaration,
-  isClassExpression,
   isClassLike,
   isFunctionDeclaration,
   isFunctionExpression,
-  isIdentifier,
   isImportClause,
   isJsxElement,
   isJsxFragment,
@@ -15,11 +12,11 @@ import {
   isVariableDeclaration,
   type ModuleResolutionCache,
   type Node,
-  SignatureKind,
   type SourceFile,
   sys as system,
   type TypeChecker,
 } from 'typescript';
+import { getGivenName } from '../entities/declaration.ts';
 import { type ImportCollection } from '../entities/import.ts';
 import { type JsxScannerDiscovery } from '../entities/scanner.ts';
 import { assignParser } from './assign-parser.ts';
@@ -50,7 +47,7 @@ export function parser({
     if (isFunctionDeclaration(node)) {
       functionParser({
         discoveries,
-        givenName: node.name,
+        givenName: getGivenName(node, sourceFile),
         importCollection,
         node,
         sourceFile,
@@ -62,7 +59,7 @@ export function parser({
       if (isFunctionExpression(node.initializer) || isArrowFunction(node.initializer)) {
         functionParser({
           discoveries,
-          givenName: node.name,
+          givenName: getGivenName(node, sourceFile),
           importCollection,
           node: node.initializer,
           sourceFile,
@@ -73,7 +70,7 @@ export function parser({
       if (isCallExpression(node.initializer)) {
         assignParser({
           discoveries,
-          givenName: node.name,
+          givenName: getGivenName(node, sourceFile),
           importCollection,
           node: node.initializer,
           sourceFile,
@@ -83,14 +80,9 @@ export function parser({
     }
 
     if (isClassLike(node)) {
-      // If node is a class expression, get parent node to determine given name
-      const givenName = isClassExpression(node) && isVariableDeclaration(node.parent) && isIdentifier(node.parent.name)
-        ? node.parent.name
-        : node.name;
-
       classParser({
         discoveries,
-        givenName,
+        givenName: getGivenName(node, sourceFile),
         importCollection,
         node,
         sourceFile,

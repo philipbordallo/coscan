@@ -48,7 +48,7 @@ const tests: Test[] = [
       expect(declarationComponent.componentName).toBe('ClassDeclarationComponent');
 
       const defaultComponent = definitions[2];
-      expect(defaultComponent.componentName).toBe('');
+      expect(defaultComponent.componentName).toBe('default');
     },
   },
   {
@@ -68,7 +68,7 @@ const tests: Test[] = [
       expect(functionDeclarationComponent.componentName).toBe('FunctionDeclarationComponent');
 
       const defaultComponent = definitions[3];
-      expect(defaultComponent.componentName).toBe('');
+      expect(defaultComponent.componentName).toBe('default');
     },
   },
   {
