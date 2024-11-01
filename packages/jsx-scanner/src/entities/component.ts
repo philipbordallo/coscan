@@ -51,12 +51,17 @@ export function getComponentId(
     return `svg:${id}`;
   }
 
-  if (importMeta && importMeta.isDefault) {
+  if (importMeta?.isDefault) {
     const id = createUniqueId(`${importMeta.path}:default`);
     return `jsx:${id}`;
   }
 
-  if (importMeta && !importMeta.isDefault) {
+  if (importMeta?.originalName) {
+    const id = createUniqueId(`${importMeta.path}:${importMeta.originalName}`);
+    return `jsx:${id}`;
+  }
+
+  if (importMeta) {
     const id = createUniqueId(`${importMeta.path}:${name}`);
     return `jsx:${id}`;
   }
