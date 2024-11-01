@@ -1,6 +1,7 @@
 import {
   type CompilerOptions,
   type ImportClause,
+  isImportSpecifier,
   type ModuleResolutionCache,
   type Node,
   resolveModuleName,
@@ -9,17 +10,6 @@ import {
 } from 'typescript';
 import { type FilePath, getRelativeFilePath } from '../entities/file.ts';
 import { type ImportCollection, ImportPath } from '../entities/import.ts';
-
-/**
- * Get an aliased import name from a named import binding.
- * @example
- * `thing as other` -> 'other'
- */
-function getAliasedName(nameBinding: Node, sourceFile?: SourceFile): string | undefined {
-  const lastToken = nameBinding.getLastToken(sourceFile);
-
-  return lastToken?.getText(sourceFile);
-}
 
 type ImportParserArgs = {
   compilerOptions: CompilerOptions;
@@ -62,9 +52,9 @@ export function importParser({
    * - `import library from 'library'`
    */
   if (node.name) {
-    const name = node.name.getText(sourceFile);
+    const key = node.name.getText(sourceFile);
 
-    importCollection.set(name, { path: resolvedImportPath, isDefault: true });
+    importCollection.set(key, { path: resolvedImportPath, isDefault: true });
   }
 
   /**
@@ -75,9 +65,12 @@ export function importParser({
    */
   if (node.namedBindings) {
     node.namedBindings.forEachChild((nameBinding) => {
-      const name = getAliasedName(nameBinding, sourceFile) ?? nameBinding.getText(sourceFile);
+      if (!isImportSpecifier(nameBinding)) return;
 
-      importCollection.set(name, { path: resolvedImportPath, isDefault: false });
+      const key = nameBinding.name.getText(sourceFile);
+      const originalName = nameBinding.propertyName?.getText(sourceFile);
+
+      importCollection.set(key, { path: resolvedImportPath, isDefault: false, originalName });
     });
   }
 }
