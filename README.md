@@ -2,6 +2,9 @@
 
 > A component scanner for React.
 
+> [!NOTE]
+> This project is in early development and the API will potentially change.
+
 ## Use cases
 
 - Track a design system's usage across a codebase
