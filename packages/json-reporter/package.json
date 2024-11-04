@@ -1,7 +1,7 @@
 {
   "name": "@coscan/json-reporter",
   "description": "JSON reporter for coscan.",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "author": "Philip Bordallo",
   "license": "MIT",
   "bugs": "https://github.com/philipbordallo/coscan/issues",
