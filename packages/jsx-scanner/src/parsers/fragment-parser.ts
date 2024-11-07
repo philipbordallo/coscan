@@ -1,5 +1,5 @@
 import type { JsxFragment, SourceFile } from 'typescript';
-import { type ComponentInstance, type ComponentName, getComponentId } from '../entities/component.ts';
+import { type ComponentName, createComponentInstance, getComponentId } from '../entities/component.ts';
 import { getRelativeFilePath } from '../entities/file.ts';
 import type { ImportCollection } from '../entities/import.ts';
 import { getPosition, getPositionPath } from '../entities/position.ts';
@@ -27,8 +27,7 @@ export function fragmentParser({
   const componentName: ComponentName = 'React.Fragment';
   const componentId = getComponentId(componentName, importCollection, relativeFilePath);
 
-  const instance: ComponentInstance = {
-    type: 'instance',
+  const instance = createComponentInstance({
     componentName,
     componentId,
     filePath: relativeFilePath,
@@ -37,7 +36,7 @@ export function fragmentParser({
     props: {},
     startPosition,
     endPosition,
-  };
+  });
 
   discoveries.push(instance);
 }

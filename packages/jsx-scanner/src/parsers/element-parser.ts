@@ -1,5 +1,5 @@
 import { isJsxSelfClosingElement, type JsxElement, type JsxSelfClosingElement, type SourceFile } from 'typescript';
-import { type ComponentName, getComponentId } from '../entities/component.ts';
+import { type ComponentName, createComponentInstance, getComponentId } from '../entities/component.ts';
 import type { ComponentInstance } from '../entities/component.ts';
 import { getRelativeFilePath } from '../entities/file.ts';
 import type { ImportCollection } from '../entities/import.ts';
@@ -38,8 +38,7 @@ export function elementParser({
 
   const props = getProps(element.attributes, sourceFile);
 
-  const instance: ComponentInstance = {
-    type: 'instance',
+  const instance = createComponentInstance({
     componentName,
     componentId,
     importedFrom: importMeta?.path,
@@ -49,7 +48,7 @@ export function elementParser({
     props,
     startPosition,
     endPosition,
-  };
+  });
 
   discoveries.push(instance);
 }
