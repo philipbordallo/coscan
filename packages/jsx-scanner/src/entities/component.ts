@@ -20,6 +20,27 @@ export type ComponentDefinition = {
   endPosition: Position;
 };
 
+type ComponentDefinitionArgs = Omit<ComponentDefinition, 'type'>;
+
+export function createComponentDefinition({
+  componentId,
+  componentName,
+  filePath,
+  location,
+  startPosition,
+  endPosition,
+}: ComponentDefinitionArgs): ComponentDefinition {
+  return {
+    type: 'definition',
+    componentName,
+    componentId,
+    filePath,
+    location,
+    startPosition,
+    endPosition,
+  };
+}
+
 export type ComponentInstance = {
   type: 'instance';
   componentName: ComponentName;
@@ -32,6 +53,33 @@ export type ComponentInstance = {
   startPosition: Position;
   endPosition: Position;
 };
+
+type CreateComponentInstanceArgs = Omit<ComponentInstance, 'type'>;
+
+export function createComponentInstance({
+  componentId,
+  componentName,
+  filePath,
+  importedFrom,
+  isSelfClosing,
+  location,
+  props,
+  startPosition,
+  endPosition,
+}: CreateComponentInstanceArgs): ComponentInstance {
+  return {
+    type: 'instance',
+    componentName,
+    componentId,
+    importedFrom,
+    filePath,
+    location,
+    isSelfClosing,
+    props,
+    startPosition,
+    endPosition,
+  };
+}
 
 export function getComponentId(
   name: ComponentName,

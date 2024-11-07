@@ -5,7 +5,7 @@ import {
   type SourceFile,
   type TypeChecker,
 } from 'typescript';
-import { getComponentId } from '../entities/component.ts';
+import { createComponentDefinition, getComponentId } from '../entities/component.ts';
 import type { ComponentDefinition } from '../entities/component.ts';
 import type { GivenName } from '../entities/declaration.ts';
 import { getRelativeFilePath } from '../entities/file.ts';
@@ -65,15 +65,14 @@ export function functionParser({
 
   const componentId = getComponentId(componentName, importCollection, relativeFilePath);
 
-  const definition: ComponentDefinition = {
-    type: 'definition',
+  const definition = createComponentDefinition({
     componentName,
     componentId,
     filePath: relativeFilePath,
     location: positionPath,
     startPosition,
     endPosition,
-  };
+  });
 
   discoveries.push(definition);
 }

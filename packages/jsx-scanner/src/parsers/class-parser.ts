@@ -1,11 +1,10 @@
 import {
   type ClassLikeDeclaration,
   type ExpressionWithTypeArguments,
-  type Identifier,
   type SourceFile,
   type TypeChecker,
 } from 'typescript';
-import { type ComponentDefinition, getComponentId } from '../entities/component.ts';
+import { createComponentDefinition, getComponentId } from '../entities/component.ts';
 import type { GivenName } from '../entities/declaration.ts';
 import { getRelativeFilePath } from '../entities/file.ts';
 import type { ImportCollection } from '../entities/import.ts';
@@ -62,15 +61,14 @@ export function classParser({
 
   const componentId = getComponentId(componentName, importCollection, relativeFilePath);
 
-  const definition: ComponentDefinition = {
-    type: 'definition',
+  const definition = createComponentDefinition({
     componentName,
     componentId,
     filePath: relativeFilePath,
     location: positionPath,
     startPosition,
     endPosition,
-  };
+  });
 
   discoveries.push(definition);
 }
