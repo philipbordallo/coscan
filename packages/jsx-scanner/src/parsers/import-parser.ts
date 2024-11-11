@@ -5,7 +5,7 @@ import {
   type ModuleResolutionCache,
   resolveModuleName,
   type SourceFile,
-  type System,
+  sys as system,
 } from 'typescript';
 import { type FilePath, getRelativeFilePath } from '../entities/file.ts';
 import { type ImportCollection, ImportPath } from '../entities/import.ts';
@@ -17,7 +17,6 @@ type ImportParserArgs = {
   moduleResolutionCache: ModuleResolutionCache;
   node: ImportClause;
   sourceFile: SourceFile;
-  system: System;
 };
 
 export function importParser({
@@ -26,7 +25,6 @@ export function importParser({
   moduleResolutionCache,
   node,
   sourceFile,
-  system,
 }: ImportParserArgs) {
   const moduleName = trimQuotes(
     node.parent?.moduleSpecifier
