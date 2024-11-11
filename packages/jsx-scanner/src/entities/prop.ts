@@ -17,6 +17,7 @@ import {
 } from 'typescript';
 import { isBooleanLiteral } from '../guards/boolean-literal.ts';
 import { isNullLiteral } from '../guards/null-literal.ts';
+import { trimQuotes } from './string.ts';
 
 export type Prop = string;
 export type PropValue = string | boolean | ObjectPropValue | ExpressionPropValue | null | undefined;
@@ -41,7 +42,7 @@ type PropertyAssignmentValue =
 
 function getPropertyAssignmentValue(initializer: Expression, sourceFile?: SourceFile): PropertyAssignmentValue {
   if (isStringLiteral(initializer)) {
-    return initializer.getText(sourceFile).replace(/['"]+/g, '');
+    return trimQuotes(initializer.getText(sourceFile));
   }
 
   if (isNumericLiteral(initializer) || isBooleanLiteral(initializer)) {

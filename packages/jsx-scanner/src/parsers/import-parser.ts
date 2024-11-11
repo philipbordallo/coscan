@@ -3,13 +3,13 @@ import {
   type ImportClause,
   isImportSpecifier,
   type ModuleResolutionCache,
-  type Node,
   resolveModuleName,
   type SourceFile,
   type System,
 } from 'typescript';
 import { type FilePath, getRelativeFilePath } from '../entities/file.ts';
 import { type ImportCollection, ImportPath } from '../entities/import.ts';
+import { trimQuotes } from '../entities/string.ts';
 
 type ImportParserArgs = {
   compilerOptions: CompilerOptions;
@@ -28,9 +28,10 @@ export function importParser({
   sourceFile,
   system,
 }: ImportParserArgs) {
-  const moduleName = node.parent?.moduleSpecifier
-    .getText(sourceFile)
-    .replace(/['"]+/g, '');
+  const moduleName = trimQuotes(
+    node.parent?.moduleSpecifier
+      .getText(sourceFile),
+  );
 
   const filePath: FilePath = sourceFile.fileName;
   const { resolvedModule } = resolveModuleName(
