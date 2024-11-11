@@ -153,7 +153,7 @@ const tests: Test[] = [
 
       const numberPropComponent = instances[6];
       expect(numberPropComponent.props).toEqual({
-        tabIndex: '2',
+        tabIndex: 2,
       });
     },
   },

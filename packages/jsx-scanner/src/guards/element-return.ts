@@ -1,13 +1,21 @@
-export type ElementReturn = 'ReactElement' | 'ReactNode' | 'React.JSX.Element' | 'JSX.Element' | 'Element';
+export type ElementReturn =
+  | 'Element'
+  | 'JSX.Element'
+  | 'React.JSX.Element'
+  | 'React.ReactElement'
+  | 'ReactElement'
+  | 'React.ReactNode'
+  | 'ReactNode';
 
 export function isElementReturn(returnType: string | undefined): returnType is ElementReturn {
   switch (returnType) {
+    case 'Element':
+    case 'JSX.Element':
+    case 'React.JSX.Element':
+    case 'React.ReactElement':
+    case 'React.ReactNode':
     case 'ReactElement':
     case 'ReactNode':
-    case 'React.ReactElement':
-    case 'React.JSX.Element':
-    case 'JSX.Element':
-    case 'Element':
       return true;
     default:
       return false;
