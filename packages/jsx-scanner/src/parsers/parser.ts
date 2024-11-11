@@ -13,7 +13,6 @@ import {
   type ModuleResolutionCache,
   type Node,
   type SourceFile,
-  sys as system,
   type TypeChecker,
 } from 'typescript';
 import { getGivenName } from '../entities/declaration.ts';
@@ -115,7 +114,6 @@ export function parser({
         moduleResolutionCache,
         node,
         sourceFile,
-        system,
       });
     }
 
