@@ -19,67 +19,77 @@ import { isBooleanLiteral } from '../guards/boolean-literal.ts';
 import { isNullLiteral } from '../guards/null-literal.ts';
 import { trimQuotes } from './string.ts';
 
-export type Prop = string;
-export type PropValue = string | boolean | ObjectPropValue | ExpressionPropValue | null | undefined;
-export type Props = {
-  [prop: Prop]: PropValue;
-};
+export type PropName = string;
 
+type ArrayPropValue = PropValue[];
+type ObjectPropValue = { [key: string]: PropValue };
 type ExpressionPropValue = `Expression -> ${string}`;
+
+export type PropValue =
+  | string
+  | number
+  | boolean
+  | ArrayPropValue
+  | ObjectPropValue
+  | ExpressionPropValue
+  | null
+  | undefined;
+
+export type Props = {
+  [prop: PropName]: PropValue;
+};
 
 function formatExpression(value: string): ExpressionPropValue {
   return `Expression -> ${value}`;
 }
 
-type PropertyAssignmentValue =
-  | string
-  | number
-  | boolean
-  | PropertyAssignmentValue[]
-  | ObjectPropValue
-  | null
-  | undefined;
+type PropertyAssignmentValue = PropValue;
 
-function getPropertyAssignmentValue(initializer: Expression, sourceFile?: SourceFile): PropertyAssignmentValue {
-  if (isStringLiteral(initializer)) {
-    return trimQuotes(initializer.getText(sourceFile));
+function getPropertyAssignmentValue(node: Expression, sourceFile?: SourceFile): PropertyAssignmentValue {
+  if (isBooleanLiteral(node)) {
+    return node.getText(sourceFile) === 'true';
   }
 
-  if (isNumericLiteral(initializer) || isBooleanLiteral(initializer)) {
-    return JSON.parse(initializer.getText(sourceFile));
+  if (isNumericLiteral(node)) {
+    return Number(node.getText(sourceFile));
   }
 
-  if (isArrayLiteralExpression(initializer)) {
-    return initializer.elements.map((element) => getPropertyAssignmentValue(element, sourceFile));
+  if (isStringLiteral(node)) {
+    return trimQuotes(node.getText(sourceFile));
   }
 
-  if (isObjectLiteralExpression(initializer)) {
-    return parseObjectExpression(initializer, sourceFile);
+  if (isArrayLiteralExpression(node)) {
+    return node.elements.map((element) => getPropertyAssignmentValue(element, sourceFile));
   }
 
-  if (isIdentifier(initializer)) {
-    return formatExpression(initializer.getText(sourceFile));
+  if (isObjectLiteralExpression(node)) {
+    return parseExpressionToObjectPropValue(node, sourceFile);
   }
 
-  if (isNullLiteral(initializer)) {
+  if (isIdentifier(node)) {
+    return formatExpression(node.getText(sourceFile));
+  }
+
+  if (isNullLiteral(node)) {
     return null;
   }
 }
 
-type ObjectPropValue = Record<string, unknown>;
-
-function parseObjectExpression(expression: ObjectLiteralExpression, sourceFile?: SourceFile): ObjectPropValue {
+export function parseExpressionToObjectPropValue(
+  expression: ObjectLiteralExpression,
+  sourceFile?: SourceFile,
+): ObjectPropValue {
   const entries = expression.properties
     .map((property) => {
       if (isPropertyAssignment(property)) {
-        const key = property.name.getText(sourceFile);
+        const key = trimQuotes(property.name.getText(sourceFile));
         const value = getPropertyAssignmentValue(property.initializer, sourceFile);
 
         return [key, value];
       }
 
       if (isShorthandPropertyAssignment(property)) {
-        const key = property.name.getText(sourceFile);
+        const key = trimQuotes(property.name.getText(sourceFile));
         const value = formatExpression(key);
 
         return [key, value];
@@ -119,8 +129,12 @@ function getPropValue(
       return null;
     }
 
+    if (isNumericLiteral(value.expression)) {
+      return Number(expression);
+    }
+
     if (isObjectLiteralExpression(value.expression) && isParsableObjectPropValue) {
-      return parseObjectExpression(value.expression, sourceFile);
+      return parseExpressionToObjectPropValue(value.expression, sourceFile);
     }
 
     return expression;
