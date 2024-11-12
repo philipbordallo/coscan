@@ -1,12 +1,12 @@
 import { describe, expect, it } from '@jest/globals';
-import { createSourceFile } from 'typescript';
 import { getPosition } from './position.ts';
+import { createTestSourceFile } from './test-utilities.ts';
 
 describe(getPosition, () => {
-  const content = 'export const hello = "world"';
-
   it('returns the correct position when checking the start', () => {
-    const sourceFile = createSourceFile('test.ts', content, 1);
+    const content = 'export const hello = "world"';
+
+    const sourceFile = createTestSourceFile({ content });
     const position = 0;
 
     const result = getPosition(position, sourceFile);
@@ -15,7 +15,9 @@ describe(getPosition, () => {
   });
 
   it('returns the correct position when checking the end', () => {
-    const sourceFile = createSourceFile('test.ts', content, 1);
+    const content = 'export const hello = "world"';
+
+    const sourceFile = createTestSourceFile({ content });
     const position = content.length;
 
     const result = getPosition(position, sourceFile);
