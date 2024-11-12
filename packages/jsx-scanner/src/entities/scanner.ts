@@ -20,6 +20,8 @@ export async function jsxScanner(config: JsxScannerConfig): Promise<JsxScannerDi
   const compilerOptions: CompilerOptions = {
     jsx: JsxEmit.React,
     checkJs: true,
+    esModuleInterop: true,
+    allowSyntheticDefaultImports: true,
   };
 
   const discoveries: JsxScannerDiscovery[] = [];
