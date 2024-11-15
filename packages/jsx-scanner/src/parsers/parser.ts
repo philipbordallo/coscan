@@ -1,15 +1,11 @@
 import {
   type CompilerOptions,
-  isArrowFunction,
-  isCallExpression,
   isClassLike,
   isFunctionDeclaration,
-  isFunctionExpression,
   isImportClause,
   isJsxElement,
   isJsxFragment,
   isJsxSelfClosingElement,
-  isVariableDeclaration,
   type ModuleResolutionCache,
   type Node,
   type SourceFile,
@@ -18,12 +14,16 @@ import {
 import { getGivenName } from '../entities/declaration.ts';
 import { type ImportCollection } from '../entities/import.ts';
 import { type JsxScannerDiscovery } from '../entities/scanner.ts';
-import { assignParser } from './assign-parser.ts';
+import { isFunctionCall } from '../guards/function-call.ts';
+import { isInitializedFunctionExpression, isInitializedVariable } from '../guards/initialized.ts';
+import { assignParser, OBJECT_ASSIGN_CALLEES } from './assign-parser.ts';
 import { classParser } from './class-parser.ts';
 import { elementParser } from './element-parser.ts';
 import { fragmentParser } from './fragment-parser.ts';
 import { functionParser } from './function-parser.ts';
 import { importParser } from './import-parser.ts';
+import { REACT_BUILTIN_ELEMENT_CALLEES, reactBuiltinElementParser } from './react-builtin-element-parser.ts';
+import { REACT_BUILTIN_CALLEES, reactBuiltinParser } from './react-builtin-parser.ts';
 
 export type ParserArgs = {
   discoveries: JsxScannerDiscovery[];
@@ -43,8 +43,30 @@ export function parser({
   typeChecker,
 }: ParserArgs) {
   return (node: Node) => {
-    if (isFunctionDeclaration(node)) {
+    if (isFunctionDeclaration(node) || isInitializedFunctionExpression(node)) {
       functionParser({
+        discoveries,
+        givenName: getGivenName(node, sourceFile),
+        importCollection,
+        node: isInitializedFunctionExpression(node) ? node.initializer : node,
+        sourceFile,
+        typeChecker,
+      });
+    }
+
+    if (isInitializedVariable(node) && isFunctionCall(node.initializer, OBJECT_ASSIGN_CALLEES, sourceFile)) {
+      assignParser({
+        discoveries,
+        givenName: getGivenName(node, sourceFile),
+        importCollection,
+        node: node.initializer,
+        sourceFile,
+        typeChecker,
+      });
+    }
+
+    if (isInitializedVariable(node) && isFunctionCall(node.initializer, REACT_BUILTIN_CALLEES, sourceFile)) {
+      reactBuiltinParser({
         discoveries,
         givenName: getGivenName(node, sourceFile),
         importCollection,
@@ -54,28 +76,14 @@ export function parser({
       });
     }
 
-    if (isVariableDeclaration(node) && node.initializer) {
-      if (isFunctionExpression(node.initializer) || isArrowFunction(node.initializer)) {
-        functionParser({
-          discoveries,
-          givenName: getGivenName(node, sourceFile),
-          importCollection,
-          node: node.initializer,
-          sourceFile,
-          typeChecker,
-        });
-      }
-
-      if (isCallExpression(node.initializer)) {
-        assignParser({
-          discoveries,
-          givenName: getGivenName(node, sourceFile),
-          importCollection,
-          node: node.initializer,
-          sourceFile,
-          typeChecker,
-        });
-      }
+    if (isFunctionCall(node, REACT_BUILTIN_ELEMENT_CALLEES, sourceFile)) {
+      reactBuiltinElementParser({
+        discoveries,
+        importCollection,
+        node,
+        sourceFile,
+        typeChecker,
+      });
     }
 
     if (isClassLike(node)) {

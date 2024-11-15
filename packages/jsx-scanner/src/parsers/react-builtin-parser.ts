@@ -1,59 +1,44 @@
-import {
-  type ArrowFunction,
-  type FunctionDeclaration,
-  type FunctionExpression,
-  type SourceFile,
-  type TypeChecker,
-} from 'typescript';
+import { type SourceFile, type TypeChecker } from 'typescript';
 import { createComponentDefinition, getComponentId } from '../entities/component.ts';
-import type { ComponentDefinition } from '../entities/component.ts';
 import type { GivenName } from '../entities/declaration.ts';
 import { getRelativeFilePath } from '../entities/file.ts';
 import type { ImportCollection } from '../entities/import.ts';
 import { getPosition, getPositionPath } from '../entities/position.ts';
 import type { JsxScannerDiscovery } from '../entities/scanner.ts';
 import { isElementType } from '../guards/element.ts';
+import type { InitializedVariable } from '../guards/initialized.ts';
 
-type FunctionNode = FunctionDeclaration | FunctionExpression | ArrowFunction;
+export const REACT_BUILTIN_CALLEES = [
+  'forwardRef',
+  'React.forwardRef',
+  'lazy',
+  'React.lazy',
+  'memo',
+  'React.memo',
+] as const;
 
-function getReturnType(
-  node: FunctionNode,
-  sourceFile: SourceFile,
-  typeChecker: TypeChecker,
-): string | undefined {
-  const definedReturnType = node.type;
-
-  if (definedReturnType) {
-    return definedReturnType.getText(sourceFile);
-  }
-
-  const signature = typeChecker.getSignatureFromDeclaration(node);
-
-  if (signature) {
-    const inferredReturnType = typeChecker.getReturnTypeOfSignature(signature);
-
-    return typeChecker.typeToString(inferredReturnType);
-  }
-}
-
-type FunctionParserArgs = {
+type ReactBuiltinParserArgs = {
   discoveries: JsxScannerDiscovery[];
   givenName: GivenName;
   importCollection: ImportCollection;
-  node: FunctionNode;
+  node: InitializedVariable;
   sourceFile: SourceFile;
   typeChecker: TypeChecker;
 };
 
-export function functionParser({
+/**
+ * Parse React builtins like `React.forwardRef`, `React.lazy`, and `React.memo` as component definitions.
+ */
+export function reactBuiltinParser({
   discoveries,
   givenName: componentName,
   importCollection,
   node,
   sourceFile,
   typeChecker,
-}: FunctionParserArgs) {
-  const returnType = getReturnType(node, sourceFile, typeChecker);
+}: ReactBuiltinParserArgs): void {
+  const initializerType = typeChecker.getTypeAtLocation(node.initializer);
+  const returnType = typeChecker.typeToString(initializerType);
 
   if (!isElementType(returnType)) return;
 
