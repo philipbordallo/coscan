@@ -6,6 +6,7 @@ import { FunctionArrowComponent } from './components/function-components.tsx';
 import { ImportComponent } from './components/import-component.tsx';
 import { add } from './components/no-component.tsx';
 import { StylePropComponent } from './components/prop-component.tsx';
+import { ReactCreateElementComponent } from './components/react-builtin-components.tsx';
 import { ReturnTypeReactElement } from './components/return-type-components.tsx';
 import { SubComponent } from './components/sub-components.tsx';
 
@@ -20,6 +21,7 @@ export function Entry() {
       <StylePropComponent />
       <ReturnTypeReactElement />
       <SubComponent />
+      <ReactCreateElementComponent />
     </>
   );
 }

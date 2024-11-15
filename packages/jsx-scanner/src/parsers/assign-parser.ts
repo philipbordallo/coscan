@@ -13,7 +13,7 @@ import { getRelativeFilePath } from '../entities/file.ts';
 import type { ImportCollection } from '../entities/import.ts';
 import { getPosition, getPositionPath } from '../entities/position.ts';
 import type { JsxScannerDiscovery } from '../entities/scanner.ts';
-import { isElementReturn } from '../guards/element-return.ts';
+import { isElementType } from '../guards/element.ts';
 
 function isComponentDefinition(node: Node, typeChecker: TypeChecker) {
   const nodeType = typeChecker.getTypeAtLocation(node);
@@ -23,11 +23,13 @@ function isComponentDefinition(node: Node, typeChecker: TypeChecker) {
     const returnType = typeChecker.getReturnTypeOfSignature(signatures[0]);
     const returnTypeString = typeChecker.typeToString(returnType);
 
-    return isElementReturn(returnTypeString);
+    return isElementType(returnTypeString);
   }
 
   return false;
 }
+
+export const OBJECT_ASSIGN_CALLEES = ['Object.assign', 'assign'] as const;
 
 type AssignParserArgs = {
   discoveries: JsxScannerDiscovery[];
@@ -46,10 +48,6 @@ export function assignParser({
   sourceFile,
   typeChecker,
 }: AssignParserArgs) {
-  // If node expressions is not `Object.assign`, skip
-  const expression = node.expression.getText(sourceFile);
-  if (expression !== 'Object.assign') return;
-
   const parts: Record<string, Node> = {};
 
   node.arguments.forEach((argument) => {
