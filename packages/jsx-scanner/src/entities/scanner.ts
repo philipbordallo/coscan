@@ -8,7 +8,7 @@ import {
 } from 'typescript';
 import { parser } from '../parsers/parser.ts';
 import { type ComponentDefinition, type ComponentInstance } from './component.ts';
-import { type ImportCollection } from './import.ts';
+import { createImportCollection, ImportCollection } from './import.ts';
 
 export type JsxScannerDiscovery = ComponentDefinition | ComponentInstance;
 
@@ -49,7 +49,7 @@ export async function jsxScanner(config: JsxScannerConfig): Promise<JsxScannerDi
     // Skip declaration files
     if (sourceFile.isDeclarationFile) return;
 
-    const importCollection: ImportCollection = new Map();
+    const importCollection = createImportCollection();
 
     // Parse the source file
     const parse = parser({

@@ -5,7 +5,7 @@ import type { ImportCollection } from '../entities/import.ts';
 import { getPosition, getPositionPath } from '../entities/position.ts';
 import { parseExpressionToObjectPropValue } from '../entities/prop.ts';
 import type { JsxScannerDiscovery } from '../entities/scanner.ts';
-import { getNamespace, trimQuotes } from '../entities/string.ts';
+import { trimQuotes } from '../entities/string.ts';
 
 export const REACT_BUILTIN_ELEMENT_CALLEES = ['React.createElement', 'createElement'] as const;
 
@@ -37,8 +37,7 @@ export function reactBuiltinElementParser({
   const componentName = trimQuotes(name.getText(sourceFile));
   const componentId = getComponentId(componentName, importCollection, relativeFilePath);
 
-  const importKey = getNamespace(componentName) ?? componentName;
-  const importMeta = importCollection.get(importKey);
+  const importMeta = importCollection.get(componentName);
 
   const instance = createComponentInstance({
     componentId,

@@ -4,7 +4,6 @@ import { type FilePath } from './file.ts';
 import { type ImportCollection, type ImportPath } from './import.ts';
 import type { Position, PositionPath } from './position.ts';
 import type { Props } from './prop.ts';
-import { getNamespace } from './string.ts';
 import { createUniqueId, type UniqueId } from './unique-id.ts';
 
 export type ComponentId = `${'html' | 'svg' | 'jsx'}:${UniqueId}`;
@@ -86,8 +85,7 @@ export function getComponentId(
   importCollection: ImportCollection,
   filePath: FilePath,
 ): ComponentId {
-  const importkey = getNamespace(name) ?? name;
-  const importMeta = importCollection.get(importkey);
+  const importMeta = importCollection.get(name);
 
   if (isBuiltInHtml(name)) {
     const id = createUniqueId(name);

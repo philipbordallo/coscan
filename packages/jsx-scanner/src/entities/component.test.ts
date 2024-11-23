@@ -1,6 +1,6 @@
 import { describe, expect, it, jest } from '@jest/globals';
 import { getComponentId } from './component.ts';
-import type { ImportCollection } from './import.ts';
+import { createImportCollection } from './import.ts';
 
 jest.mock('./unique-id.ts', () => ({
   createUniqueId(value: string) {
@@ -17,7 +17,7 @@ jest.mock('./unique-id.ts', () => ({
 }));
 
 describe(getComponentId, () => {
-  const importCollection: ImportCollection = new Map([
+  const importCollection = createImportCollection([
     ['Example', { path: './example.ts', isDefault: false }],
     ['Button', { path: 'library', isDefault: false }],
     ['Table', { path: 'library', isDefault: false }],
