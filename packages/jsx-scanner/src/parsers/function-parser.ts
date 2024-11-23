@@ -6,7 +6,6 @@ import {
   type TypeChecker,
 } from 'typescript';
 import { createComponentDefinition, getComponentId } from '../entities/component.ts';
-import type { ComponentDefinition } from '../entities/component.ts';
 import type { GivenName } from '../entities/declaration.ts';
 import { getRelativeFilePath } from '../entities/file.ts';
 import type { ImportCollection } from '../entities/import.ts';
@@ -14,7 +13,7 @@ import { getPosition, getPositionPath } from '../entities/position.ts';
 import type { JsxScannerDiscovery } from '../entities/scanner.ts';
 import { isElementType } from '../guards/element.ts';
 
-type FunctionNode = FunctionDeclaration | FunctionExpression | ArrowFunction;
+export type FunctionNode = FunctionDeclaration | FunctionExpression | ArrowFunction;
 
 function getReturnType(
   node: FunctionNode,
