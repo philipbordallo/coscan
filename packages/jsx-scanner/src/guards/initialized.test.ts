@@ -1,6 +1,6 @@
 import { describe, expect, it } from '@jest/globals';
-import { SyntaxKind } from 'typescript';
-import { createTestSourceFile, queryNodeKind } from '../entities/test-utilities.ts';
+import { queryNodeBy } from '../test-utilities/test-query.ts';
+import { createTestSourceFile } from '../test-utilities/test-source-file.ts';
 import { isInitializedFunctionExpression, isInitializedVariable } from './initialized.ts';
 
 describe(isInitializedVariable, () => {
@@ -8,7 +8,7 @@ describe(isInitializedVariable, () => {
     const content = 'const hello = "world"';
 
     const sourceFile = createTestSourceFile({ content });
-    const node = queryNodeKind(SyntaxKind.VariableDeclaration, sourceFile);
+    const node = queryNodeBy('VariableDeclaration', sourceFile);
 
     expect(isInitializedVariable(node)).toBe(true);
   });
@@ -17,7 +17,7 @@ describe(isInitializedVariable, () => {
     const content = 'const hello';
 
     const sourceFile = createTestSourceFile({ content });
-    const node = queryNodeKind(SyntaxKind.VariableDeclaration, sourceFile);
+    const node = queryNodeBy('VariableDeclaration', sourceFile);
 
     expect(isInitializedVariable(node)).toBe(false);
   });
@@ -28,7 +28,7 @@ describe(isInitializedFunctionExpression, () => {
     const content = 'const hello = function() {}';
 
     const sourceFile = createTestSourceFile({ content });
-    const node = queryNodeKind(SyntaxKind.VariableDeclaration, sourceFile);
+    const node = queryNodeBy('VariableDeclaration', sourceFile);
 
     expect(isInitializedFunctionExpression(node)).toBe(true);
   });
@@ -37,7 +37,7 @@ describe(isInitializedFunctionExpression, () => {
     const content = 'function hello() {}';
 
     const sourceFile = createTestSourceFile({ content });
-    const node = queryNodeKind(SyntaxKind.FunctionDeclaration, sourceFile);
+    const node = queryNodeBy('FunctionDeclaration', sourceFile);
 
     expect(isInitializedFunctionExpression(node)).toBe(false);
   });

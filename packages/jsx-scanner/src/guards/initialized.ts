@@ -16,7 +16,7 @@ export function isInitializedVariable(node: Node): node is InitializedVariable {
   return Boolean(isVariableDeclaration(node) && node.initializer);
 }
 
-type InitializedFunctionExpression = VariableDeclaration & {
+export type InitializedFunctionExpression = VariableDeclaration & {
   initializer: FunctionExpression | ArrowFunction;
 };
 
