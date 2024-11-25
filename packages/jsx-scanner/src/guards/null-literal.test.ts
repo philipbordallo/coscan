@@ -1,6 +1,6 @@
 import { describe, expect, it } from '@jest/globals';
-import { SyntaxKind } from 'typescript';
-import { createTestSourceFile, queryNodeKind } from '../entities/test-utilities.ts';
+import { queryNodeBy } from '../test-utilities/test-query.ts';
+import { createTestSourceFile } from '../test-utilities/test-source-file.ts';
 import { isNullLiteral } from './null-literal.ts';
 
 describe(isNullLiteral, () => {
@@ -8,7 +8,7 @@ describe(isNullLiteral, () => {
     const content = 'const test = null;';
 
     const sourceFile = createTestSourceFile({ content });
-    const nullLiteral = queryNodeKind(SyntaxKind.NullKeyword, sourceFile);
+    const nullLiteral = queryNodeBy('NullKeyword', sourceFile);
 
     expect(isNullLiteral(nullLiteral)).toBe(true);
   });
@@ -17,8 +17,8 @@ describe(isNullLiteral, () => {
     const content = 'const options = ["hello", 1];';
 
     const sourceFile = createTestSourceFile({ content });
-    const stringLiteral = queryNodeKind(SyntaxKind.StringLiteral, sourceFile);
-    const numericLiteral = queryNodeKind(SyntaxKind.NumericLiteral, sourceFile);
+    const stringLiteral = queryNodeBy('StringLiteral', sourceFile);
+    const numericLiteral = queryNodeBy('NumericLiteral', sourceFile);
 
     expect(isNullLiteral(stringLiteral)).toBe(false);
     expect(isNullLiteral(numericLiteral)).toBe(false);

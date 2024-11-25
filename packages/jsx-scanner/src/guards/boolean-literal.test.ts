@@ -1,6 +1,6 @@
 import { describe, expect, it } from '@jest/globals';
-import { SyntaxKind } from 'typescript';
-import { createTestSourceFile, queryNodeKind } from '../entities/test-utilities.ts';
+import { queryNodeBy } from '../test-utilities/test-query.ts';
+import { createTestSourceFile } from '../test-utilities/test-source-file.ts';
 import { isBooleanLiteral } from './boolean-literal.ts';
 
 describe(isBooleanLiteral, () => {
@@ -8,7 +8,7 @@ describe(isBooleanLiteral, () => {
     const content = 'const test = true;';
 
     const sourceFile = createTestSourceFile({ content });
-    const trueLiteral = queryNodeKind(SyntaxKind.TrueKeyword, sourceFile);
+    const trueLiteral = queryNodeBy('TrueKeyword', sourceFile);
 
     expect(isBooleanLiteral(trueLiteral)).toBe(true);
   });
@@ -17,7 +17,7 @@ describe(isBooleanLiteral, () => {
     const content = 'const test = false;';
 
     const sourceFile = createTestSourceFile({ content });
-    const falseLiteral = queryNodeKind(SyntaxKind.FalseKeyword, sourceFile);
+    const falseLiteral = queryNodeBy('FalseKeyword', sourceFile);
 
     expect(isBooleanLiteral(falseLiteral)).toBe(true);
   });
@@ -26,7 +26,7 @@ describe(isBooleanLiteral, () => {
     const content = 'const test = null;';
 
     const sourceFile = createTestSourceFile({ content });
-    const nullLiteral = queryNodeKind(SyntaxKind.NullKeyword, sourceFile);
+    const nullLiteral = queryNodeBy('NullKeyword', sourceFile);
 
     expect(isBooleanLiteral(nullLiteral)).toBe(false);
   });
