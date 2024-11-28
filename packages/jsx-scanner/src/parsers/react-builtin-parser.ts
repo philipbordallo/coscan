@@ -1,10 +1,10 @@
 import { type SourceFile, type TypeChecker } from 'typescript';
 import { createComponentDefinition, getComponentId } from '../component.ts';
 import type { GivenName } from '../declaration.ts';
+import { isElementType } from '../element.ts';
 import { getRelativeFilePath } from '../file.ts';
-import { isElementType } from '../guards/element.ts';
-import type { InitializedVariable } from '../guards/initialized.ts';
 import type { ImportCollection } from '../import.ts';
+import type { InitializedVariable } from '../node.ts';
 import { getPosition, getPositionPath } from '../position.ts';
 import type { JsxScannerDiscovery } from '../scanner.ts';
 

@@ -9,8 +9,8 @@ import {
 } from 'typescript';
 import { type ComponentName, createComponentDefinition, getComponentId } from '../component.ts';
 import type { GivenName } from '../declaration.ts';
+import { isElementType } from '../element.ts';
 import { getRelativeFilePath } from '../file.ts';
-import { isElementType } from '../guards/element.ts';
 import type { ImportCollection } from '../import.ts';
 import { getPosition, getPositionPath } from '../position.ts';
 import type { JsxScannerDiscovery } from '../scanner.ts';
