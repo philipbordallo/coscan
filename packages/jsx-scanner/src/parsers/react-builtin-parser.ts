@@ -1,11 +1,11 @@
 import { type SourceFile, type TypeChecker } from 'typescript';
 import { createComponentDefinition, getComponentId } from '../component.ts';
-import type { GivenName } from '../declaration.ts';
-import { getRelativeFilePath } from '../file.ts';
-import { isElementType } from '../guards/element.ts';
-import type { InitializedVariable } from '../guards/initialized.ts';
-import type { ImportCollection } from '../import.ts';
-import { getPosition, getPositionPath } from '../position.ts';
+import { getRelativeFilePath } from '../file-entities/file.ts';
+import { getPosition, getPositionPath } from '../file-entities/position.ts';
+import type { GivenName } from '../js-entities/declaration.ts';
+import type { ImportCollection } from '../js-entities/import.ts';
+import type { InitializedVariable } from '../js-entities/node.ts';
+import { isElementType } from '../jsx-entities/element.ts';
 import type { JsxScannerDiscovery } from '../scanner.ts';
 
 export const REACT_BUILTIN_CALLEES = [

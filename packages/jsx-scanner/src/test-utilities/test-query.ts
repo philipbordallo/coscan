@@ -1,13 +1,5 @@
-import {
-  type FunctionDeclaration,
-  isFunctionDeclaration,
-  isVariableDeclaration,
-  type Node,
-  type SourceFile,
-  SyntaxKind,
-  type VariableDeclaration,
-} from 'typescript';
-import { type InitializedFunctionExpression, isInitializedFunctionExpression } from '../guards/initialized.ts';
+import { type FunctionDeclaration, type Node, type SourceFile, SyntaxKind, type VariableDeclaration } from 'typescript';
+import { type InitializedFunctionExpression, isInitializedFunctionExpression } from '../js-entities/node.ts';
 
 type SyntaxKindUnion = keyof typeof SyntaxKind;
 

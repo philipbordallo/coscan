@@ -1,9 +1,9 @@
-import { type FilePath } from './file.ts';
-import { isBuiltInHtml } from './guards/built-in-html.ts';
-import { isBuiltInSvg } from './guards/built-in-svg.ts';
-import { type ImportCollection, type ImportPath } from './import.ts';
-import type { Position, PositionPath } from './position.ts';
-import type { Props } from './prop.ts';
+import { type FilePath } from './file-entities/file.ts';
+import type { Position, PositionPath } from './file-entities/position.ts';
+import { type ImportCollection, type ImportPath } from './js-entities/import.ts';
+import { isBuiltInHtml } from './jsx-entities/built-in-html.ts';
+import { isBuiltInSvg } from './jsx-entities/built-in-svg.ts';
+import type { Props } from './jsx-entities/prop.ts';
 import { createUniqueId, type UniqueId } from './unique-id.ts';
 
 export type ComponentId = `${'html' | 'svg' | 'jsx'}:${UniqueId}`;
