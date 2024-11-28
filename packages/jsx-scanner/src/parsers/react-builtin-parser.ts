@@ -4,7 +4,7 @@ import { getRelativeFilePath } from '../file-entities/file.ts';
 import { getPosition, getPositionPath } from '../file-entities/position.ts';
 import type { GivenName } from '../js-entities/declaration.ts';
 import type { ImportCollection } from '../js-entities/import.ts';
-import type { InitializedVariable } from '../js-entities/node.ts';
+import type { InitializedVariable } from '../js-entities/variable.ts';
 import { isElementType } from '../jsx-entities/element.ts';
 import type { JsxScannerDiscovery } from '../scanner.ts';
 

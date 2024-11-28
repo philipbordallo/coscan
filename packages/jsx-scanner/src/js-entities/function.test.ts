@@ -1,42 +1,7 @@
 import { describe, expect, it } from '@jest/globals';
 import { queryNodeBy } from '../test-utilities/test-query.ts';
 import { createTestSourceFile } from '../test-utilities/test-source-file.ts';
-import {
-  isBooleanLiteral,
-  isFunctionCall,
-  isInitializedFunctionExpression,
-  isInitializedVariable,
-  isNullLiteral,
-} from './node.ts';
-
-describe(isBooleanLiteral, () => {
-  it('returns true for true literal', () => {
-    const content = 'const test = true;';
-
-    const sourceFile = createTestSourceFile({ content });
-    const trueLiteral = queryNodeBy('TrueKeyword', sourceFile);
-
-    expect(isBooleanLiteral(trueLiteral)).toBe(true);
-  });
-
-  it('returns true for false literal', () => {
-    const content = 'const test = false;';
-
-    const sourceFile = createTestSourceFile({ content });
-    const falseLiteral = queryNodeBy('FalseKeyword', sourceFile);
-
-    expect(isBooleanLiteral(falseLiteral)).toBe(true);
-  });
-
-  it('returns false for other nodes', () => {
-    const content = 'const test = null;';
-
-    const sourceFile = createTestSourceFile({ content });
-    const nullLiteral = queryNodeBy('NullKeyword', sourceFile);
-
-    expect(isBooleanLiteral(nullLiteral)).toBe(false);
-  });
-});
+import { isFunctionCall, isInitializedFunctionExpression } from './function.ts';
 
 describe(isFunctionCall, () => {
   it('should return true if the node is a function call', () => {
@@ -84,27 +49,6 @@ describe(isFunctionCall, () => {
     expect(isFunctionCall(node, ['React.create'], sourceFile)).toBe(false);
   });
 });
-
-describe(isInitializedVariable, () => {
-  it('should return true if the variable is initialized', () => {
-    const content = 'const hello = "world"';
-
-    const sourceFile = createTestSourceFile({ content });
-    const node = queryNodeBy('VariableDeclaration', sourceFile);
-
-    expect(isInitializedVariable(node)).toBe(true);
-  });
-
-  it('should return false if the variable is not initialized', () => {
-    const content = 'const hello';
-
-    const sourceFile = createTestSourceFile({ content });
-    const node = queryNodeBy('VariableDeclaration', sourceFile);
-
-    expect(isInitializedVariable(node)).toBe(false);
-  });
-});
-
 describe(isInitializedFunctionExpression, () => {
   it('should return true if the function expression is initialized', () => {
     const content = 'const hello = function() {}';
@@ -122,27 +66,5 @@ describe(isInitializedFunctionExpression, () => {
     const node = queryNodeBy('FunctionDeclaration', sourceFile);
 
     expect(isInitializedFunctionExpression(node)).toBe(false);
-  });
-});
-
-describe(isNullLiteral, () => {
-  it('returns true for null literal', () => {
-    const content = 'const test = null;';
-
-    const sourceFile = createTestSourceFile({ content });
-    const nullLiteral = queryNodeBy('NullKeyword', sourceFile);
-
-    expect(isNullLiteral(nullLiteral)).toBe(true);
-  });
-
-  it('returns false for other nodes', () => {
-    const content = 'const options = ["hello", 1];';
-
-    const sourceFile = createTestSourceFile({ content });
-    const stringLiteral = queryNodeBy('StringLiteral', sourceFile);
-    const numericLiteral = queryNodeBy('NumericLiteral', sourceFile);
-
-    expect(isNullLiteral(stringLiteral)).toBe(false);
-    expect(isNullLiteral(numericLiteral)).toBe(false);
   });
 });
