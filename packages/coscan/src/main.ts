@@ -1,1 +1,1 @@
-export { coscan, type CoscanConfig } from './entities/coscan.ts';
+export { coscan, type CoscanConfig } from './coscan.ts';

@@ -6,9 +6,9 @@ import {
   createProgram,
   JsxEmit,
 } from 'typescript';
-import { parser } from '../parsers/parser.ts';
 import { type ComponentDefinition, type ComponentInstance } from './component.ts';
 import { createImportCollection, ImportCollection } from './import.ts';
+import { parser } from './parsers/parser.ts';
 
 export type JsxScannerDiscovery = ComponentDefinition | ComponentInstance;
 

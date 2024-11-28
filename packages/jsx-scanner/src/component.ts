@@ -1,6 +1,6 @@
-import { isBuiltInHtml } from '../guards/built-in-html.ts';
-import { isBuiltInSvg } from '../guards/built-in-svg.ts';
 import { type FilePath } from './file.ts';
+import { isBuiltInHtml } from './guards/built-in-html.ts';
+import { isBuiltInSvg } from './guards/built-in-svg.ts';
 import { type ImportCollection, type ImportPath } from './import.ts';
 import type { Position, PositionPath } from './position.ts';
 import type { Props } from './prop.ts';

@@ -1,6 +1,6 @@
 import { describe, expect, it } from '@jest/globals';
-import { createTestSourceFile } from '../test-utilities/test-source-file.ts';
 import { getPosition } from './position.ts';
+import { createTestSourceFile } from './test-utilities/test-source-file.ts';
 
 describe(getPosition, () => {
   it('returns the correct position when checking the start', () => {

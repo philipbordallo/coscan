@@ -1,10 +1,10 @@
 import { isJsxSelfClosingElement, type JsxElement, type JsxSelfClosingElement, type SourceFile } from 'typescript';
-import { type ComponentName, createComponentInstance, getComponentId } from '../entities/component.ts';
-import { getRelativeFilePath } from '../entities/file.ts';
-import type { ImportCollection } from '../entities/import.ts';
-import { getPosition, getPositionPath } from '../entities/position.ts';
-import { getProps } from '../entities/prop.ts';
-import type { JsxScannerDiscovery } from '../entities/scanner.ts';
+import { type ComponentName, createComponentInstance, getComponentId } from '../component.ts';
+import { getRelativeFilePath } from '../file.ts';
+import type { ImportCollection } from '../import.ts';
+import { getPosition, getPositionPath } from '../position.ts';
+import { getProps } from '../prop.ts';
+import type { JsxScannerDiscovery } from '../scanner.ts';
 
 type ElementParserArgs = {
   discoveries: JsxScannerDiscovery[];
