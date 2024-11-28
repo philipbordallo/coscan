@@ -1,12 +1,12 @@
 import { type SourceFile, type TypeChecker } from 'typescript';
-import { createComponentDefinition, getComponentId } from '../entities/component.ts';
-import type { GivenName } from '../entities/declaration.ts';
-import { getRelativeFilePath } from '../entities/file.ts';
-import type { ImportCollection } from '../entities/import.ts';
-import { getPosition, getPositionPath } from '../entities/position.ts';
-import type { JsxScannerDiscovery } from '../entities/scanner.ts';
+import { createComponentDefinition, getComponentId } from '../component.ts';
+import type { GivenName } from '../declaration.ts';
+import { getRelativeFilePath } from '../file.ts';
 import { isElementType } from '../guards/element.ts';
 import type { InitializedVariable } from '../guards/initialized.ts';
+import type { ImportCollection } from '../import.ts';
+import { getPosition, getPositionPath } from '../position.ts';
+import type { JsxScannerDiscovery } from '../scanner.ts';
 
 export const REACT_BUILTIN_CALLEES = [
   'forwardRef',

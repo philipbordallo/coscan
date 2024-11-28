@@ -7,9 +7,9 @@ import {
   type SourceFile,
   sys as system,
 } from 'typescript';
-import { type FilePath, getRelativeFilePath } from '../entities/file.ts';
-import { type ImportCollection, ImportPath } from '../entities/import.ts';
-import { trimQuotes } from '../entities/string.ts';
+import { type FilePath, getRelativeFilePath } from '../file.ts';
+import { type ImportCollection, ImportPath } from '../import.ts';
+import { trimQuotes } from '../string.ts';
 
 type ImportParserArgs = {
   compilerOptions: CompilerOptions;

@@ -2,7 +2,7 @@ import chalk from 'chalk';
 import meow from 'meow';
 import { writeFile } from 'node:fs/promises';
 import ora from 'ora';
-import { coscan, type Reporter } from './entities/coscan.ts';
+import { coscan, type Reporter } from './coscan.ts';
 
 const HELP_TEXT = `
   Usage

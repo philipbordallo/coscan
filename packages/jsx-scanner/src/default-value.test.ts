@@ -1,12 +1,12 @@
 import { describe, expect, it } from '@jest/globals';
 import { isArrowFunction } from 'typescript';
+import { DefaultValueCollection, findDefaultValueCollection } from './default-value.ts';
 import {
   queryFunctionDeclaration,
   queryInitializedFunctionExpression,
   queryNodeBy,
-} from '../test-utilities/test-query.ts';
-import { createTestSourceFile } from '../test-utilities/test-source-file.ts';
-import { DefaultValueCollection, findDefaultValueCollection } from './default-value.ts';
+} from './test-utilities/test-query.ts';
+import { createTestSourceFile } from './test-utilities/test-source-file.ts';
 
 describe(findDefaultValueCollection, () => {
   it('returns a DefaultValues instance', () => {

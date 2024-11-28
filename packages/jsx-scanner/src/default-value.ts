@@ -7,7 +7,7 @@ import {
   type ParameterDeclaration,
   type SourceFile,
 } from 'typescript';
-import type { FunctionNode } from '../parsers/function-parser.ts';
+import type { FunctionNode } from './parsers/function-parser.ts';
 
 type DefaultValueKey = string;
 type DefaultValue = string;

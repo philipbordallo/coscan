@@ -1,11 +1,11 @@
 import { type CallExpression, isObjectLiteralExpression, type SourceFile, type TypeChecker } from 'typescript';
-import { createComponentInstance, getComponentId } from '../entities/component.ts';
-import { getRelativeFilePath } from '../entities/file.ts';
-import type { ImportCollection } from '../entities/import.ts';
-import { getPosition, getPositionPath } from '../entities/position.ts';
-import { parseExpressionToObjectPropValue } from '../entities/prop.ts';
-import type { JsxScannerDiscovery } from '../entities/scanner.ts';
-import { trimQuotes } from '../entities/string.ts';
+import { createComponentInstance, getComponentId } from '../component.ts';
+import { getRelativeFilePath } from '../file.ts';
+import type { ImportCollection } from '../import.ts';
+import { getPosition, getPositionPath } from '../position.ts';
+import { parseExpressionToObjectPropValue } from '../prop.ts';
+import type { JsxScannerDiscovery } from '../scanner.ts';
+import { trimQuotes } from '../string.ts';
 
 export const REACT_BUILTIN_ELEMENT_CALLEES = ['React.createElement', 'createElement'] as const;
 
