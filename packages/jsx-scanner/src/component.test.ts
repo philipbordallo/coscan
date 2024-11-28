@@ -1,6 +1,6 @@
 import { describe, expect, it, jest } from '@jest/globals';
 import { getComponentId } from './component.ts';
-import { createImportCollection } from './import.ts';
+import { createImportCollection } from './js-entities/import.ts';
 
 jest.mock('./unique-id.ts', () => ({
   createUniqueId(value: string) {

@@ -1,6 +1,6 @@
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+import { createTestSourceFile } from '../test-utilities/test-source-file.ts';
 import { getRelativeFilePath } from './file.ts';
-import { createTestSourceFile } from './test-utilities/test-source-file.ts';
 
 describe(getRelativeFilePath, () => {
   const content = 'const hello = "world";';

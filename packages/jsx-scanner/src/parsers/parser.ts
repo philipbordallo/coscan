@@ -11,9 +11,9 @@ import {
   type SourceFile,
   type TypeChecker,
 } from 'typescript';
-import { getGivenName } from '../declaration.ts';
-import { type ImportCollection } from '../import.ts';
-import { isFunctionCall, isInitializedFunctionExpression, isInitializedVariable } from '../node.ts';
+import { getGivenName } from '../js-entities/declaration.ts';
+import { type ImportCollection } from '../js-entities/import.ts';
+import { isFunctionCall, isInitializedFunctionExpression, isInitializedVariable } from '../js-entities/node.ts';
 import { type JsxScannerDiscovery } from '../scanner.ts';
 import { assignParser, OBJECT_ASSIGN_CALLEES } from './assign-parser.ts';
 import { classParser } from './class-parser.ts';

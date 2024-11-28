@@ -1,4 +1,6 @@
 import { describe, expect, it } from '@jest/globals';
+import { queryNodeBy } from '../test-utilities/test-query.ts';
+import { createTestSourceFile } from '../test-utilities/test-source-file.ts';
 import {
   isBooleanLiteral,
   isFunctionCall,
@@ -6,8 +8,6 @@ import {
   isInitializedVariable,
   isNullLiteral,
 } from './node.ts';
-import { queryNodeBy } from './test-utilities/test-query.ts';
-import { createTestSourceFile } from './test-utilities/test-source-file.ts';
 
 describe(isBooleanLiteral, () => {
   it('returns true for true literal', () => {

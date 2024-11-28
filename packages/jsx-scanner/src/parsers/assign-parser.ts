@@ -8,11 +8,11 @@ import {
   type TypeChecker,
 } from 'typescript';
 import { type ComponentName, createComponentDefinition, getComponentId } from '../component.ts';
-import type { GivenName } from '../declaration.ts';
-import { isElementType } from '../element.ts';
-import { getRelativeFilePath } from '../file.ts';
-import type { ImportCollection } from '../import.ts';
-import { getPosition, getPositionPath } from '../position.ts';
+import { getRelativeFilePath } from '../file-entities/file.ts';
+import { getPosition, getPositionPath } from '../file-entities/position.ts';
+import type { GivenName } from '../js-entities/declaration.ts';
+import type { ImportCollection } from '../js-entities/import.ts';
+import { isElementType } from '../jsx-entities/element.ts';
 import type { JsxScannerDiscovery } from '../scanner.ts';
 
 function isComponentDefinition(node: Node, typeChecker: TypeChecker) {
