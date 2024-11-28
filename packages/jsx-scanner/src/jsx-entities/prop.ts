@@ -15,7 +15,8 @@ import {
   type ObjectLiteralExpression,
   type SourceFile,
 } from 'typescript';
-import { isBooleanLiteral, isNullLiteral } from '../js-entities/node.ts';
+import { isBooleanLiteral } from '../js-entities/boolean.ts';
+import { isNullLiteral } from '../js-entities/null.ts';
 import { trimQuotes } from '../js-entities/string.ts';
 
 export type PropName = string;

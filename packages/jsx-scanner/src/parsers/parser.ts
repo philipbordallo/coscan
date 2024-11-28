@@ -12,8 +12,10 @@ import {
   type TypeChecker,
 } from 'typescript';
 import { getGivenName } from '../js-entities/declaration.ts';
+import { isFunctionCall } from '../js-entities/function.ts';
+import { isInitializedFunctionExpression } from '../js-entities/function.ts';
 import { type ImportCollection } from '../js-entities/import.ts';
-import { isFunctionCall, isInitializedFunctionExpression, isInitializedVariable } from '../js-entities/node.ts';
+import { isInitializedVariable } from '../js-entities/variable.ts';
 import { type JsxScannerDiscovery } from '../scanner.ts';
 import { assignParser, OBJECT_ASSIGN_CALLEES } from './assign-parser.ts';
 import { classParser } from './class-parser.ts';

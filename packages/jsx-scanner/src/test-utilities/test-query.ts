@@ -1,5 +1,5 @@
 import { type FunctionDeclaration, type Node, type SourceFile, SyntaxKind, type VariableDeclaration } from 'typescript';
-import { type InitializedFunctionExpression, isInitializedFunctionExpression } from '../js-entities/node.ts';
+import { type InitializedFunctionExpression, isInitializedFunctionExpression } from '../js-entities/function.ts';
 
 type SyntaxKindUnion = keyof typeof SyntaxKind;
 
