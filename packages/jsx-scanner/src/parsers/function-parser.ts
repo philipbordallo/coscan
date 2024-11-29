@@ -5,7 +5,8 @@ import {
   type SourceFile,
   type TypeChecker,
 } from 'typescript';
-import { createComponentDefinition, getComponentId } from '../component.ts';
+import { createComponentDefinition } from '../components/component-definition.ts';
+import { getComponentId } from '../components/component-id.ts';
 import { getRelativeFilePath } from '../file-entities/file.ts';
 import { getPosition, getPositionPath } from '../file-entities/position.ts';
 import type { GivenName } from '../js-entities/declaration.ts';
