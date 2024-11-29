@@ -6,7 +6,8 @@ import {
   createProgram,
   JsxEmit,
 } from 'typescript';
-import { type ComponentDefinition, type ComponentInstance } from './component.ts';
+import { type ComponentDefinition } from './components/component-definition.ts';
+import { type ComponentInstance } from './components/component-instance.ts';
 import { createImportCollection, ImportCollection } from './js-entities/import.ts';
 import { parser } from './parsers/parser.ts';
 

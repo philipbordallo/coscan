@@ -1,5 +1,6 @@
 import { type CallExpression, isObjectLiteralExpression, type SourceFile, type TypeChecker } from 'typescript';
-import { createComponentInstance, getComponentId } from '../component.ts';
+import { getComponentId } from '../components/component-id.ts';
+import { createComponentInstance } from '../components/component-instance.ts';
 import { getRelativeFilePath } from '../file-entities/file.ts';
 import { getPosition, getPositionPath } from '../file-entities/position.ts';
 import type { ImportCollection } from '../js-entities/import.ts';

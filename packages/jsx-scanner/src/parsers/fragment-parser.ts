@@ -1,5 +1,7 @@
 import type { JsxFragment, SourceFile } from 'typescript';
-import { type ComponentName, createComponentInstance, getComponentId } from '../component.ts';
+import { getComponentId } from '../components/component-id.ts';
+import { createComponentInstance } from '../components/component-instance.ts';
+import { type ComponentName } from '../components/component-name.ts';
 import { getRelativeFilePath } from '../file-entities/file.ts';
 import { getPosition, getPositionPath } from '../file-entities/position.ts';
 import type { ImportCollection } from '../js-entities/import.ts';
