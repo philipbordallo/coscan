@@ -1,5 +1,6 @@
 import type { FilePath } from '../file-entities/file.ts';
 import type { Position, PositionPath } from '../file-entities/position.ts';
+import type { PropsDefinition } from '../jsx-entities/prop.ts';
 import type { ComponentId } from './component-id.ts';
 import type { ComponentName } from './component-name.ts';
 
@@ -9,6 +10,7 @@ export type ComponentDefinition = {
   componentId: ComponentId;
   filePath: FilePath;
   location: PositionPath;
+  props: PropsDefinition;
   startPosition: Position;
   endPosition: Position;
 };
@@ -19,6 +21,7 @@ export function createComponentDefinition({
   componentName,
   filePath,
   location,
+  props,
   startPosition,
   endPosition,
 }: ComponentDefinitionArgs): ComponentDefinition {
@@ -28,6 +31,7 @@ export function createComponentDefinition({
     componentId,
     filePath,
     location,
+    props,
     startPosition,
     endPosition,
   };

@@ -1,7 +1,7 @@
 import type { FilePath } from '../file-entities/file.ts';
 import type { Position, PositionPath } from '../file-entities/position.ts';
 import type { ImportPath } from '../js-entities/import.ts';
-import type { Props } from '../jsx-entities/prop.ts';
+import type { PropsInstance } from '../jsx-entities/prop.ts';
 import type { ComponentId } from './component-id.ts';
 import type { ComponentName } from './component-name.ts';
 
@@ -13,7 +13,7 @@ export type ComponentInstance = {
   filePath: FilePath;
   location: PositionPath;
   isSelfClosing: boolean;
-  props: Props;
+  props: PropsInstance;
   startPosition: Position;
   endPosition: Position;
 };

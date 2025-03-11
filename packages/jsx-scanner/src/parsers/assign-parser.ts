@@ -1,5 +1,8 @@
 import {
+  type ArrowFunction,
   type CallExpression,
+  type FunctionDeclaration,
+  type FunctionExpression,
   isIdentifier,
   isObjectLiteralExpression,
   type Node,
@@ -15,10 +18,14 @@ import { getPosition, getPositionPath } from '../file-entities/position.ts';
 import type { GivenName } from '../js-entities/declaration.ts';
 import type { ImportCollection } from '../js-entities/import.ts';
 import { isElementType } from '../jsx-entities/element.ts';
+import { createPropsDefinition } from '../jsx-entities/prop.ts';
 import type { JsxScannerDiscovery } from '../scanner.ts';
 
-function isComponentDefinition(node: Node, typeChecker: TypeChecker) {
+export type ComponentDeclaration = FunctionDeclaration | FunctionExpression | ArrowFunction;
+
+function isComponentDeclaration(node: Node, typeChecker: TypeChecker): node is ComponentDeclaration {
   const nodeType = typeChecker.getTypeAtLocation(node);
+
   const signatures = typeChecker.getSignaturesOfType(nodeType, SignatureKind.Call);
 
   if (signatures.length) {
@@ -30,6 +37,8 @@ function isComponentDefinition(node: Node, typeChecker: TypeChecker) {
 
   return false;
 }
+
+type ComponentParts = Record<string, ComponentDeclaration>;
 
 export const OBJECT_ASSIGN_CALLEES = ['Object.assign', 'assign'] as const;
 
@@ -50,12 +59,12 @@ export function assignParser({
   sourceFile,
   typeChecker,
 }: AssignParserArgs) {
-  const parts: Record<string, Node> = {};
+  const parts: ComponentParts = {};
 
   node.arguments.forEach((argument) => {
     // If argument is the parent component, example `Table`
     if (isIdentifier(argument)) {
-      if (isComponentDefinition(argument, typeChecker)) {
+      if (isComponentDeclaration(argument, typeChecker)) {
         parts[namespace] = argument;
       }
     }
@@ -65,7 +74,7 @@ export function assignParser({
       argument.properties.forEach((property) => {
         const subName = `${namespace}.${property.getText()}`;
 
-        if (isComponentDefinition(property, typeChecker)) {
+        if (isComponentDeclaration(property, typeChecker)) {
           parts[subName] = property;
         }
       });
@@ -82,11 +91,20 @@ export function assignParser({
     const componentName: ComponentName = partName;
     const componentId = getComponentId(componentName, importCollection, relativeFilePath);
 
+    const signature = typeChecker.getSignaturesOfType(typeChecker.getTypeAtLocation(partNode), SignatureKind.Call);
+
+    const signatureDeclaration = signature[0].declaration;
+
+    const props = signatureDeclaration && isComponentDeclaration(signatureDeclaration, typeChecker)
+      ? createPropsDefinition({ node: signatureDeclaration, sourceFile, typeChecker })
+      : {};
+
     const definition = createComponentDefinition({
       componentName,
       componentId,
       filePath: relativeFilePath,
       location: positionPath,
+      props,
       startPosition,
       endPosition,
     });

@@ -12,6 +12,7 @@ import { getPosition, getPositionPath } from '../file-entities/position.ts';
 import type { GivenName } from '../js-entities/declaration.ts';
 import type { ImportCollection } from '../js-entities/import.ts';
 import { isElementType } from '../jsx-entities/element.ts';
+import { createPropsDefinition } from '../jsx-entities/prop.ts';
 import type { JsxScannerDiscovery } from '../scanner.ts';
 
 export type FunctionNode = FunctionDeclaration | FunctionExpression | ArrowFunction;
@@ -65,10 +66,13 @@ export function functionParser({
 
   const componentId = getComponentId(componentName, importCollection, relativeFilePath);
 
+  const props = createPropsDefinition({ node, sourceFile, typeChecker });
+
   const definition = createComponentDefinition({
     componentName,
     componentId,
     filePath: relativeFilePath,
+    props,
     location: positionPath,
     startPosition,
     endPosition,
