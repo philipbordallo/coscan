@@ -24,11 +24,11 @@ Check out the [coscan package documentation][coscan] for more information.
 
 ### Examples
 
-| Name                                                   | Description              |
-| ------------------------------------------------------ | ------------------------ |
-| [`@coscan/react-simple-example`][react-simple-example] | Simple example for React |
+| Name                                       | Description              |
+| ------------------------------------------ | ------------------------ |
+| [`@coscan/react-fixtures`][react-fixtures] | Simple example for React |
 
 [coscan]: ./packages/coscan/README.md
 [json-reporter]: ./packages/json-reporter/README.md
 [jsx-scanner]: ./packages/jsx-scanner/README.md
-[react-simple-example]: ./examples/react-simple-example/README.md
+[react-fixtures]: ./examples/react-fixtures/README.md
