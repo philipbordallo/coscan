@@ -66,6 +66,7 @@ export function classParser({
     componentName,
     componentId,
     filePath: relativeFilePath,
+    props: {},
     location: positionPath,
     startPosition,
     endPosition,

@@ -5,7 +5,7 @@ import { type ComponentName } from '../components/component-name.ts';
 import { getRelativeFilePath } from '../file-entities/file.ts';
 import { getPosition, getPositionPath } from '../file-entities/position.ts';
 import type { ImportCollection } from '../js-entities/import.ts';
-import { getProps } from '../jsx-entities/prop.ts';
+import { createPropsInstance } from '../jsx-entities/prop.ts';
 import type { JsxScannerDiscovery } from '../scanner.ts';
 
 type ElementParserArgs = {
@@ -35,7 +35,7 @@ export function elementParser({
 
   const importMeta = importCollection.get(componentName);
 
-  const props = getProps(element.attributes, sourceFile);
+  const props = createPropsInstance(element.attributes, sourceFile);
 
   const instance = createComponentInstance({
     componentName,

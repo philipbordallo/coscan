@@ -55,6 +55,7 @@ export function reactBuiltinParser({
     componentName,
     componentId,
     filePath: relativeFilePath,
+    props: {},
     location: positionPath,
     startPosition,
     endPosition,
