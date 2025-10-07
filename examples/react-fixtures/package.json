@@ -15,6 +15,7 @@
   },
   "peerDependencies": {},
   "scripts": {
-    "scan": "npx coscan src/entry.tsx --output output.json"
+    "scan:raw": "coscan src/entry.tsx --output output.json --reporter json:raw",
+    "scan:count": "coscan src/entry.tsx --output output.json --reporter json:count"
   }
 }
