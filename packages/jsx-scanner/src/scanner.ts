@@ -8,7 +8,7 @@ import {
 } from 'typescript';
 import { type ComponentDefinition } from './components/component-definition.ts';
 import { type ComponentInstance } from './components/component-instance.ts';
-import { createImportCollection, ImportCollection } from './js-entities/import.ts';
+import { createImportCollection } from './js-entities/import.ts';
 import { parser } from './parsers/parser.ts';
 
 export type JsxScannerDiscovery = ComponentDefinition | ComponentInstance;

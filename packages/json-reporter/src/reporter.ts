@@ -6,27 +6,37 @@ import type {
   JsxScannerDiscovery,
 } from '@coscan/jsx-scanner';
 
-type BuiltInItem = {
+type RawBuiltInItem = {
   type: 'built-in';
   componentName: ComponentName;
   componentId: ComponentId;
   instances: ComponentInstance[];
 };
 
-type DefinitionItem = {
+type RawDefinitionItem = ComponentDefinition & {
   type: 'definition';
-  componentName: ComponentName;
-  componentId: ComponentId;
   instances: ComponentInstance[];
-} & ComponentDefinition;
+};
 
-type RawItem = BuiltInItem | DefinitionItem;
+type RawItem = RawBuiltInItem | RawDefinitionItem;
 
-type CountItem = {
+type CountBuiltInItem = {
+  type: 'built-in';
   componentName: ComponentName;
   componentId: ComponentId;
   instanceCount: number;
 };
+
+type CountDefinitionItem = {
+  type: 'definition';
+  componentName: ComponentName;
+  componentId: ComponentId;
+  location: ComponentDefinition['location'];
+  filePath: ComponentDefinition['filePath'];
+  instanceCount: number;
+};
+
+type CountItem = CountBuiltInItem | CountDefinitionItem;
 
 type JsonReport = RawItem[] | CountItem[];
 
@@ -89,14 +99,28 @@ export function jsonReporter(
     discoveries.forEach((discovery) => {
       const stashedComponent = stash.get(discovery.componentId);
 
-      if (!stashedComponent) {
+      if (discovery.type === 'definition' && !stashedComponent) {
         stash.set(discovery.componentId, {
+          type: 'definition',
           componentName: discovery.componentName,
           componentId: discovery.componentId,
-          instanceCount: discovery.type === 'instance' ? 1 : 0,
+          filePath: discovery.filePath,
+          location: discovery.location,
+          instanceCount: 0,
         });
-      } else if (discovery.type === 'instance') {
-        stashedComponent.instanceCount += 1;
+      }
+
+      if (discovery.type === 'instance') {
+        if (!stashedComponent) {
+          stash.set(discovery.componentId, {
+            type: 'built-in',
+            componentName: discovery.componentName,
+            componentId: discovery.componentId,
+            instanceCount: 1,
+          });
+        } else {
+          stashedComponent.instanceCount += 1;
+        }
       }
     });
 
