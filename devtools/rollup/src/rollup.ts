@@ -1,5 +1,5 @@
-import pluginBabel from '@rollup/plugin-babel';
 import pluginNodeResolve from '@rollup/plugin-node-resolve';
+import pluginTypescript from '@rollup/plugin-typescript';
 import {
   defineConfig,
   type ExternalOption,
@@ -22,8 +22,9 @@ function getOutput(pkg: Package): OutputOptions[] {
   if (pkg.exports['.']) {
     return [
       {
-        file: pkg.exports['.'].import,
+        dir: pkg.exports['.'].import.replace(/\/[^/]+$/, ''),
         format: 'esm',
+        preserveModules: true,
       },
       {
         file: pkg.exports['.'].require,
@@ -60,10 +61,7 @@ export function createRollupConfig(pkg: Package) {
   ];
   const plugins: InputPluginOption = [
     pluginNodeResolve(),
-    pluginBabel({
-      babelHelpers: 'runtime',
-      extensions: ['.ts'],
-    }),
+    pluginTypescript(),
   ];
 
   const watch: WatcherOptions = {

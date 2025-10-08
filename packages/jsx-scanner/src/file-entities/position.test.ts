@@ -1,8 +1,8 @@
-import { describe, expect, it } from '@jest/globals';
+import { describe, expect, it } from '@coscan/test';
 import { createTestSourceFile } from '../test-utilities/test-source-file.ts';
 import { getPosition } from './position.ts';
 
-describe(getPosition, () => {
+describe(getPosition.name, () => {
   it('returns the correct position when checking the start', () => {
     const content = 'export const hello = "world"';
 

@@ -1,9 +1,9 @@
-import { describe, expect, it } from '@jest/globals';
+import { describe, expect, it } from '@coscan/test';
 import { queryNodeBy } from '../test-utilities/test-query.ts';
 import { createTestSourceFile } from '../test-utilities/test-source-file.ts';
 import { isFunctionCall, isInitializedFunctionExpression } from './function.ts';
 
-describe(isFunctionCall, () => {
+describe(isFunctionCall.name, () => {
   it('should return true if the node is a function call', () => {
     const content = 'React.createElement("div")';
 
@@ -49,7 +49,7 @@ describe(isFunctionCall, () => {
     expect(isFunctionCall(node, ['React.create'], sourceFile)).toBe(false);
   });
 });
-describe(isInitializedFunctionExpression, () => {
+describe(isInitializedFunctionExpression.name, () => {
   it('should return true if the function expression is initialized', () => {
     const content = 'const hello = function() {}';
 

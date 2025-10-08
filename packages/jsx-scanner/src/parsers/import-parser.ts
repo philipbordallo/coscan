@@ -8,7 +8,7 @@ import {
   sys as system,
 } from 'typescript';
 import { type FilePath, getRelativeFilePath } from '../file-entities/file.ts';
-import { type ImportCollection, ImportPath } from '../js-entities/import.ts';
+import { type ImportCollection, type ImportPath } from '../js-entities/import.ts';
 import { trimQuotes } from '../js-entities/string.ts';
 
 type ImportParserArgs = {

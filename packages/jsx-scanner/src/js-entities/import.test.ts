@@ -1,7 +1,7 @@
-import { describe, expect, it } from '@jest/globals';
+import { describe, expect, it } from '@coscan/test';
 import { createImportCollection, ImportCollection } from './import.ts';
 
-describe(ImportCollection, () => {
+describe(ImportCollection.name, () => {
   it('should allow for an import to be added', () => {
     const importCollection = createImportCollection();
 

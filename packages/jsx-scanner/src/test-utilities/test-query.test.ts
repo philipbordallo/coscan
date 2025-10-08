@@ -1,4 +1,4 @@
-import { describe, expect, it } from '@jest/globals';
+import { describe, expect, it } from '@coscan/test';
 import { isFunctionDeclaration, isVariableDeclaration } from 'typescript';
 import {
   queryAllNodesBy,
@@ -9,7 +9,7 @@ import {
 } from './test-query.ts';
 import { createTestSourceFile } from './test-source-file.ts';
 
-describe(queryAllNodesBy, () => {
+describe(queryAllNodesBy.name, () => {
   it('returns an array of nodes', () => {
     const content = `
       function example() {}
@@ -34,7 +34,7 @@ describe(queryAllNodesBy, () => {
   });
 });
 
-describe(queryNodeBy, () => {
+describe(queryNodeBy.name, () => {
   it('returns a node', () => {
     const content = `
       function example() {}
@@ -70,7 +70,7 @@ describe(queryNodeBy, () => {
   });
 });
 
-describe(queryFunctionDeclaration, () => {
+describe(queryFunctionDeclaration.name, () => {
   it('returns a FunctionDeclaration node', () => {
     const content = `
       const test = 'hello';
@@ -85,7 +85,7 @@ describe(queryFunctionDeclaration, () => {
   });
 });
 
-describe(queryVariableDeclaration, () => {
+describe(queryVariableDeclaration.name, () => {
   it('returns a VariableDeclaration node', () => {
     const content = `
       const test = 'hello';
@@ -98,7 +98,7 @@ describe(queryVariableDeclaration, () => {
   });
 });
 
-describe(queryInitializedFunctionExpression, () => {
+describe(queryInitializedFunctionExpression.name, () => {
   it('returns a VariableDeclaration node', () => {
     const content = `
       const example = function() {};

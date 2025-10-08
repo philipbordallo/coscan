@@ -1,7 +1,7 @@
-import { describe, expect, it } from '@jest/globals';
+import { describe, expect, it } from '@coscan/test';
 import { isElementType } from './element.ts';
 
-describe(isElementType, () => {
+describe(isElementType.name, () => {
   it('returns true for an Element type', () => {
     const type = 'Element';
 

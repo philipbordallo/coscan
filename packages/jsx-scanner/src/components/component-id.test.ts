@@ -1,9 +1,9 @@
-import { describe, expect, it } from '@jest/globals';
+import { describe, expect, it } from '@coscan/test';
 import { createImportCollection } from '../js-entities/import.ts';
 import { getComponentId } from './component-id.ts';
 import { createUniqueId } from './component-id.ts';
 
-describe(getComponentId, () => {
+describe(getComponentId.name, () => {
   const importCollection = createImportCollection([
     ['Example', { path: './example.ts', isDefault: false }],
     ['Button', { path: 'library', isDefault: false }],

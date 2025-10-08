@@ -1,7 +1,7 @@
-import { describe, expect, it } from '@jest/globals';
+import { describe, expect, it } from '@coscan/test';
 import { isBuiltInHtml } from './built-in-html.ts';
 
-describe(isBuiltInHtml, () => {
+describe(isBuiltInHtml.name, () => {
   it('returns true for built-in HTML elements', () => {
     expect(isBuiltInHtml('div')).toBe(true);
     expect(isBuiltInHtml('a')).toBe(true);

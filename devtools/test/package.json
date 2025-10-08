@@ -1,18 +1,9 @@
 {
-  "name": "@coscan/jsx-scanner",
-  "description": "JSX implementation for coscan.",
-  "version": "0.4.0",
+  "name": "@coscan/test",
+  "version": "0.0.0",
+  "private": true,
   "author": "Philip Bordallo",
   "license": "MIT",
-  "bugs": "https://github.com/philipbordallo/coscan/issues",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/philipbordallo/coscan.git",
-    "directory": "packages/jsx-scanner"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
   "type": "module",
   "entry": {
     "main": "./src/main.ts"
@@ -30,19 +21,18 @@
   "browserslist": [
     "extends @coscan/browserslist-config"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "expect": "^30.2.0"
+  },
   "devDependencies": {
     "@coscan/rollup": "*",
-    "@coscan/test": "*"
+    "@coscan/tsconfig": "*"
   },
-  "peerDependencies": {
-    "typescript": ">=5"
-  },
+  "peerDependencies": {},
   "scripts": {
     "build": "rollup -c ./rollup.config.js",
     "build:watch": "rollup -c ./rollup.config.js --watch",
     "clean": "rm -rf .turbo/ && rm -rf dist/ && rm -rf tsconfig.tsbuildinfo",
-    "test": "node --test src/**/*.test.ts",
     "type": "tsc --build --pretty",
     "type:watch": "tsc --build --preserveWatchOutput --watch"
   }

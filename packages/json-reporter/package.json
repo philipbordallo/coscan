@@ -41,6 +41,7 @@
     "build": "rollup -c ./rollup.config.js",
     "build:watch": "rollup -c ./rollup.config.js --watch",
     "clean": "rm -rf .turbo/ && rm -rf dist/ && rm -rf tsconfig.tsbuildinfo",
+    "test": "node --test src/**/*.test.ts",
     "type": "tsc --build --pretty",
     "type:watch": "tsc --build --preserveWatchOutput --watch"
   }
