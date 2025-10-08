@@ -1,6 +1,6 @@
 {
   "name": "coscan",
-  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bullseye",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:24",
   "remoteUser": "node",
   "mounts": [
     "source=${localWorkspaceFolderBasename}-node_modules,target=${containerWorkspaceFolder}/node_modules,type=volume"
