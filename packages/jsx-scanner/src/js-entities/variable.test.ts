@@ -1,9 +1,9 @@
-import { describe, expect, it } from '@jest/globals';
+import { describe, expect, it } from '@coscan/test';
 import { queryNodeBy } from '../test-utilities/test-query.ts';
 import { createTestSourceFile } from '../test-utilities/test-source-file.ts';
 import { isInitializedVariable } from './variable.ts';
 
-describe(isInitializedVariable, () => {
+describe(isInitializedVariable.name, () => {
   it('should return true if the variable is initialized', () => {
     const content = 'const hello = "world"';
 

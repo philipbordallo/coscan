@@ -1,7 +1,7 @@
-import { describe, expect, it } from '@jest/globals';
+import { describe, expect, it } from '@coscan/test';
 import { isBuiltInSvg } from './built-in-svg.ts';
 
-describe(isBuiltInSvg, () => {
+describe(isBuiltInSvg.name, () => {
   it('returns true for built-in SVG elements', () => {
     expect(isBuiltInSvg('svg')).toBe(true);
     expect(isBuiltInSvg('path')).toBe(true);

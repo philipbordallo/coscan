@@ -1,4 +1,4 @@
-import { describe, expect, it } from '@jest/globals';
+import { describe, expect, it } from '@coscan/test';
 import { jsxScanner, type JsxScannerDiscovery } from './scanner.ts';
 
 type GroupedDiscoveries = Partial<Record<string, JsxScannerDiscovery[]>>;
@@ -220,14 +220,16 @@ const tests: Test[] = [
   },
 ];
 
-describe(jsxScanner, () => {
+describe(jsxScanner.name, () => {
   const discoveries = jsxScanner({
     files: tests.map(({ filePath }) => filePath),
   }).then(groupByFilePath);
 
-  it.each(tests)('$it', async ({ filePath, test }) => {
-    const results = await load(discoveries, filePath);
+  for (const test of tests) {
+    it(test.it, async () => {
+      const results = await load(discoveries, test.filePath);
 
-    test(results);
-  });
+      test.test(results);
+    });
+  }
 });

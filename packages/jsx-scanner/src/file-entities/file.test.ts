@@ -1,16 +1,16 @@
-import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals';
+import { afterAll, beforeAll, describe, expect, it, mock } from '@coscan/test';
 import { createTestSourceFile } from '../test-utilities/test-source-file.ts';
 import { getRelativeFilePath } from './file.ts';
 
-describe(getRelativeFilePath, () => {
+describe(getRelativeFilePath.name, () => {
   const content = 'const hello = "world";';
 
   beforeAll(() => {
-    process.cwd = jest.fn(() => '/path/to/project');
+    mock.method(process, 'cwd', () => '/path/to/project');
   });
 
   afterAll(() => {
-    jest.restoreAllMocks();
+    mock.restoreAll();
   });
 
   it('returns the file path if it already is a relative path', () => {

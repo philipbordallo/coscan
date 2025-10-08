@@ -1,9 +1,9 @@
-import { describe, expect, it } from '@jest/globals';
+import { describe, expect, it } from '@coscan/test';
 import { queryNodeBy } from '../test-utilities/test-query.ts';
 import { createTestSourceFile } from '../test-utilities/test-source-file.ts';
 import { isBooleanLiteral } from './boolean.ts';
 
-describe(isBooleanLiteral, () => {
+describe(isBooleanLiteral.name, () => {
   it('returns true for true literal', () => {
     const content = 'const test = true;';
 

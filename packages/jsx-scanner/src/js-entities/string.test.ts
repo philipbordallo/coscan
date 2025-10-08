@@ -1,7 +1,7 @@
-import { describe, expect, it } from '@jest/globals';
+import { describe, expect, it } from '@coscan/test';
 import { getNamespace, trimQuotes } from './string.ts';
 
-describe(getNamespace, () => {
+describe(getNamespace.name, () => {
   it('returns the namespace when the string has subparts', () => {
     expect(getNamespace('Table.Header')).toBe('Table');
   });
@@ -11,7 +11,7 @@ describe(getNamespace, () => {
   });
 });
 
-describe(trimQuotes, () => {
+describe(trimQuotes.name, () => {
   it('removes single quotes from the beginning and end of a string', () => {
     expect(trimQuotes(`'Table'`)).toBe('Table');
   });
