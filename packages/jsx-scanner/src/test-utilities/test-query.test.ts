@@ -30,7 +30,7 @@ describe(queryAllNodesBy, () => {
 
     const sourceFile = createTestSourceFile({ content });
 
-    expect(() => queryAllNodesBy('VariableDeclaration', sourceFile)).toThrowError();
+    expect(() => queryAllNodesBy('VariableDeclaration', sourceFile)).toThrow(Error);
   });
 });
 
@@ -53,7 +53,7 @@ describe(queryNodeBy, () => {
 
     const sourceFile = createTestSourceFile({ content });
 
-    expect(() => queryNodeBy('VariableDeclaration', sourceFile)).toThrowError();
+    expect(() => queryNodeBy('VariableDeclaration', sourceFile)).toThrow(Error);
   });
 
   it('only finds the first node of a given type', () => {
@@ -117,6 +117,6 @@ describe(queryInitializedFunctionExpression, () => {
 
     const sourceFile = createTestSourceFile({ content });
 
-    expect(() => queryInitializedFunctionExpression(sourceFile)).toThrowError();
+    expect(() => queryInitializedFunctionExpression(sourceFile)).toThrow(Error);
   });
 });
