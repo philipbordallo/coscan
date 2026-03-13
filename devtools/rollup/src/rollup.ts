@@ -61,7 +61,7 @@ export function createRollupConfig(pkg: Package) {
   ];
   const plugins: InputPluginOption = [
     pluginNodeResolve(),
-    pluginTypescript(),
+    pluginTypescript({ outputToFilesystem: true }),
   ];
 
   const watch: WatcherOptions = {
