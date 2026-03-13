@@ -32,7 +32,6 @@
   "dependencies": {
     "@coscan/json-reporter": "*",
     "@coscan/jsx-scanner": "*",
-    "chalk": "^5.6.2",
     "meow": "^14.0.0",
     "ora": "^9.0.0"
   },

@@ -1,6 +1,6 @@
-import chalk from 'chalk';
 import meow from 'meow';
 import { writeFile } from 'node:fs/promises';
+import { styleText } from 'node:util';
 import ora from 'ora';
 import { coscan, type Reporter } from './coscan.ts';
 
@@ -86,7 +86,7 @@ async function run(): Promise<RunData> {
 async function handleSuccess(data: RunData) {
   if (data.output) {
     await writeFile(data.output, data.results);
-    spinner.succeed(`Scanning complete, results saved to ${chalk.bold(data.output)}.`);
+    spinner.succeed(`Scanning complete, results saved to ${styleText('bold', data.output)}.`);
 
     return;
   }
@@ -96,7 +96,7 @@ async function handleSuccess(data: RunData) {
 }
 
 function handleError(error: Error) {
-  spinner.fail(`${chalk.red('FAIL')} ${error.message}`);
+  spinner.fail(`${styleText('red', 'FAIL')} ${error.message}`);
   process.exit(1);
 }
 
