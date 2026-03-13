@@ -1,4 +1,5 @@
 type TableProps = {
+  variant?: 'compact' | 'spacious';
   children: React.ReactNode;
 };
 

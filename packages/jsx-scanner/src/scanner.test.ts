@@ -12,6 +12,14 @@ async function load(discoveries: Promise<GroupedDiscoveries>, filePath: string):
   return results[filePath] ?? [];
 }
 
+function byDefinition(discovery: JsxScannerDiscovery) {
+  return discovery.type === 'definition';
+}
+
+function byInstance(discovery: JsxScannerDiscovery) {
+  return discovery.type === 'instance';
+}
+
 type Test = {
   it: string;
   filePath: string;
@@ -38,7 +46,7 @@ const tests: Test[] = [
     it: 'works with class components',
     filePath: 'examples/react-fixtures/src/components/class-components.tsx',
     test: async (results) => {
-      const definitions = results.filter((result) => result.type === 'definition');
+      const definitions = results.filter(byDefinition);
       expect(definitions).toHaveLength(3);
 
       const expressionComponent = definitions[0];
@@ -55,7 +63,7 @@ const tests: Test[] = [
     it: 'works with function components',
     filePath: 'examples/react-fixtures/src/components/function-components.tsx',
     test: async (results) => {
-      const definitions = results.filter((result) => result.type === 'definition');
+      const definitions = results.filter(byDefinition);
       expect(definitions).toHaveLength(4);
 
       const functionExpressionComponent = definitions[0];
@@ -82,7 +90,7 @@ const tests: Test[] = [
     it: 'works with defined return types',
     filePath: 'examples/react-fixtures/src/components/return-type-components.tsx',
     test: async (results) => {
-      const definitions = results.filter((result) => result.type === 'definition');
+      const definitions = results.filter(byDefinition);
       expect(definitions).toHaveLength(1);
 
       const component = definitions[0];
@@ -93,7 +101,7 @@ const tests: Test[] = [
     it: 'works with fragments',
     filePath: 'examples/react-fixtures/src/components/fragment-components.tsx',
     test: async (results) => {
-      const instances = results.filter((result) => result.type === 'instance');
+      const instances = results.filter(byInstance);
       expect(instances).toHaveLength(3);
 
       const unnamedFragmentComponent = instances[0];
@@ -110,7 +118,7 @@ const tests: Test[] = [
     it: 'handles instance props',
     filePath: 'examples/react-fixtures/src/components/prop-component.tsx',
     test: async (results) => {
-      const instances = results.filter((result) => result.type === 'instance');
+      const instances = results.filter(byInstance);
 
       expect(instances).toHaveLength(7);
 
@@ -161,7 +169,7 @@ const tests: Test[] = [
     it: 'works with imported components',
     filePath: 'examples/react-fixtures/src/components/import-component.tsx',
     test: async (results) => {
-      const instances = results.filter((result) => result.type === 'instance');
+      const instances = results.filter(byInstance);
       expect(instances).toHaveLength(1);
 
       const importComponent = instances[0];
@@ -172,7 +180,7 @@ const tests: Test[] = [
     it: 'works with sub-component instances',
     filePath: 'examples/react-fixtures/src/components/sub-components.tsx',
     test: async (results) => {
-      const instances = results.filter((result) => result.type === 'instance');
+      const instances = results.filter(byInstance);
       expect(instances).toHaveLength(4);
 
       const table = instances[0];
@@ -196,7 +204,7 @@ const tests: Test[] = [
     it: 'works with sub-component definitions',
     filePath: 'examples/react-fixtures/src/components/table-component.tsx',
     test: async (results) => {
-      const definitions = results.filter((result) => result.type === 'definition');
+      const definitions = results.filter(byDefinition);
       expect(definitions).toHaveLength(6);
 
       const tableRoot = definitions[0];
@@ -216,6 +224,47 @@ const tests: Test[] = [
 
       const tableCell = definitions[5];
       expect(tableCell.componentName).toBe('Table.Cell');
+    },
+  },
+  {
+    it: 'can get prop values from sub-components defined with Object.assign',
+    filePath: 'examples/react-fixtures/src/components/table-component.tsx',
+    test: async (results) => {
+      const definitions = results.filter(byDefinition);
+
+      const tableRoot = definitions[0];
+      expect(tableRoot.props).toEqual({
+        children: { defaultValue: undefined, required: true, type: 'ReactNode' },
+        variant: { defaultValue: undefined, required: false, type: '"compact" | "spacious"' },
+      });
+    },
+  },
+  {
+    it: 'understands sub-component instances that have props',
+    filePath: 'examples/react-fixtures/src/components/sub-components.tsx',
+    test: async (results) => {
+      const instances = results.filter(byInstance);
+
+      const table = instances[0];
+      expect(table.props).toEqual({
+        variant: 'compact',
+      });
+    },
+  },
+  {
+    it: 'can handle built-in components',
+    filePath: 'examples/react-fixtures/src/components/react-builtin-components.tsx',
+    test: async (results) => {
+      const definitions = results.filter(byDefinition);
+
+      const memo = definitions[0];
+      expect(memo.componentName).toBe('ReactMemoComponent');
+
+      const forwardRef = definitions[1];
+      expect(forwardRef.componentName).toBe('ReactForwardRefComponent');
+
+      const createElement = definitions[2];
+      expect(createElement.componentName).toBe('ReactCreateElementComponent');
     },
   },
 ];
