@@ -6,7 +6,7 @@ import { coscan, type Reporter } from './coscan.ts';
 
 const HELP_TEXT = `
   Usage
-    $ coscan <files> <options>
+    $ coscan <files...> [options]
 
   Files
     List of files to scan
