@@ -1,3 +1,3 @@
 # @coscan/react-fixtures
 
-> Example React project for coscan
+> Example React project for coscan.

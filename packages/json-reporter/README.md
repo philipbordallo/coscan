@@ -2,6 +2,8 @@
 
 > JSON reporter for coscan.
 
+[**`npm`**][npm-link]
+
 > [!NOTE]
 > You probably don't need to use this package directly as it is intended to be used with [`coscan`](../coscan/README.md) and should be installed as a dependency of that package.
 
@@ -27,3 +29,5 @@ async function main() {
 
 const output = main();
 ```
+
+[npm-link]: https://www.npmjs.com/package/@coscan/json-reporter
